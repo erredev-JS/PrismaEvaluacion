@@ -1,0 +1,225 @@
+generator client {
+  provider = "prisma-client-js"
+  
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model categoria {
+  id        BigInt      @id @default(autoincrement())
+  nombre    String?     @db.VarChar(255)
+  activo    Boolean?    @db.Bit(1)
+  productos productos[]
+}
+
+model colores {
+  id             BigInt           @id @default(autoincrement())
+  nombre         String?          @db.VarChar(255)
+  valor          String?          @db.VarChar(255)
+  activo         Boolean?         @db.Bit(1)
+  producto_color producto_color[] @ignore
+}
+
+model descuentos {
+  id               BigInt    @id @default(autoincrement())
+  fecha_desde      DateTime? @db.Date
+  fecha_hasta      DateTime? @db.Date
+  descripcion      String?   @db.VarChar(255)
+  promocion_precio Float?
+  tiempo_desde     DateTime? @db.Time(6)
+  tiempo_hasta     DateTime? @db.Time(6)
+  nombre           String?   @db.VarChar(255)
+  activo           Boolean?  @db.Bit(1)
+  precios          precios?
+}
+
+model detalle_factura {
+  id              BigInt     @id @default(autoincrement())
+  monto           Float?
+  cantidad        Int?
+  subtotal        Float?
+  precio_unitario Float?
+  factura_id      BigInt?
+  producto_id     BigInt?
+  activo          Boolean?   @db.Bit(1)
+  productos       productos? @relation(fields: [producto_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKt42rg2ha5kdrb6t1v35dwn27x")
+  factura         factura?   @relation(fields: [factura_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKucgyfvfujw8g2tt3c6fdkxai")
+
+  @@index([producto_id], map: "FKt42rg2ha5kdrb6t1v35dwn27x")
+  @@index([factura_id], map: "FKucgyfvfujw8g2tt3c6fdkxai")
+}
+
+model detalles {
+  id        BigInt     @id @default(autoincrement())
+  color     String?    @db.VarChar(255)
+  tama_o    String?    @map("tamaño") @db.VarChar(255)
+  estado    Boolean?   @db.Bit(1)
+  stock     Int?
+  precio_id BigInt?    @unique(map: "UKsvdfehjnhso84dt19drc78y4i")
+  activo    Boolean?   @db.Bit(1)
+  precios   precios?   @relation(fields: [precio_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKc8oetbck5raimawexmts4m0p1")
+  imagenes  imagenes[]
+}
+
+model direccion {
+  id                                        BigInt     @id @default(autoincrement())
+  codigo_postal                             Int?
+  numero                                    Int?
+  calle                                     String?    @db.VarChar(255)
+  user_id                                   BigInt?
+  localidad_id                              BigInt?
+  activo                                    Boolean?   @db.Bit(1)
+  localidad                                 localidad? @relation(fields: [localidad_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKbrm0ogdtkt096len14mgaaau7")
+  usuarios_direccion_user_idTousuarios      usuarios?  @relation("direccion_user_idTousuarios", fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKsevgdua41k9nn1k7hhglxgixa")
+  usuarios_usuarios_direccion_idTodireccion usuarios[] @relation("usuarios_direccion_idTodireccion")
+
+  @@index([localidad_id], map: "FKbrm0ogdtkt096len14mgaaau7")
+  @@index([user_id], map: "FKsevgdua41k9nn1k7hhglxgixa")
+}
+
+model factura {
+  id                  BigInt            @id @default(autoincrement())
+  fecha_compra        DateTime?         @db.Date
+  total               Float?
+  usuario_id          BigInt?
+  activo              Boolean?          @db.Bit(1)
+  direccion_comprador String?           @db.VarChar(255)
+  dni_comprador       String?           @db.VarChar(255)
+  nombre_comprador    String?           @db.VarChar(255)
+  detalle_factura     detalle_factura[]
+  usuarios            usuarios?         @relation(fields: [usuario_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK5jh2f7cvry6vwq6ats5otr065")
+
+  @@index([usuario_id], map: "FK5jh2f7cvry6vwq6ats5otr065")
+}
+
+model imagenes {
+  id        BigInt     @id @default(autoincrement())
+  url       String?    @db.VarChar(255)
+  imagen_id BigInt?
+  activo    Boolean?   @db.Bit(1)
+  detalles  detalles?  @relation(fields: [imagen_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKhyoquja2ddcnew4324heh2qtl")
+  productos productos?
+
+  @@index([imagen_id], map: "FKhyoquja2ddcnew4324heh2qtl")
+}
+
+model localidad {
+  id           BigInt      @id @default(autoincrement())
+  nombre       String?     @db.VarChar(255)
+  provincia_id BigInt?
+  activo       Boolean?    @db.Bit(1)
+  direccion    direccion[]
+  provincia    provincia?  @relation(fields: [provincia_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK37mbpxuicwnbo878s9djjgr39")
+
+  @@index([provincia_id], map: "FK37mbpxuicwnbo878s9djjgr39")
+}
+
+model pais {
+  id        BigInt      @id @default(autoincrement())
+  nombre    String?     @db.VarChar(255)
+  activo    Boolean?    @db.Bit(1)
+  provincia provincia[]
+}
+
+model precios {
+  id            BigInt      @id @default(autoincrement())
+  precio_compra Float?
+  precio_venta  Float?
+  descuento_id  BigInt?     @unique(map: "UK6kn3rbbqx5evkg21lq05s9mk9")
+  activo        Boolean?    @db.Bit(1)
+  detalles      detalles?
+  descuentos    descuentos? @relation(fields: [descuento_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKc4kat1n0tjfind4uxefxleueo")
+  productos     productos?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model producto_color {
+  id_producto BigInt
+  id_color    BigInt
+  productos   productos @relation(fields: [id_producto], references: [id], onUpdate: Restrict, map: "FK9fqsiaminn90o8833iwk8c4rt")
+  colores     colores   @relation(fields: [id_color], references: [id], onUpdate: Restrict, map: "FKiploq42bp9nej4mo98mi5ps1a")
+
+  @@index([id_producto], map: "FK9fqsiaminn90o8833iwk8c4rt")
+  @@index([id_color], map: "FKiploq42bp9nej4mo98mi5ps1a")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model producto_talle {
+  id_producto BigInt
+  id_talle    BigInt
+  productos   productos @relation(fields: [id_producto], references: [id], onUpdate: Restrict, map: "FKanbnfi0vfike3y3n3vj1a8f2i")
+  talla       talla     @relation(fields: [id_talle], references: [id], onUpdate: Restrict, map: "FKmnfm4pj8o4xblnh003d9spypf")
+
+  @@index([id_producto], map: "FKanbnfi0vfike3y3n3vj1a8f2i")
+  @@index([id_talle], map: "FKmnfm4pj8o4xblnh003d9spypf")
+  @@ignore
+}
+
+model productos {
+  id              BigInt            @id @default(autoincrement())
+  nombre          String?           @db.VarChar(255)
+  tipo_producto   Int?              @db.TinyInt
+  sexo            String?           @db.VarChar(255)
+  categoria_id    BigInt?
+  precio_id       BigInt?           @unique(map: "UKiui74lcrybsvvnqgbv2ubx8ge")
+  imagen_id       BigInt?           @unique(map: "UK1tktbgm379pqd9mnb6jyalbvm")
+  descripcion     String?           @db.VarChar(255)
+  stock           Int?
+  activo          Boolean?          @db.Bit(1)
+  detalle_factura detalle_factura[]
+  producto_color  producto_color[]  @ignore
+  producto_talle  producto_talle[]  @ignore
+  imagenes        imagenes?         @relation(fields: [imagen_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK8y54fd89l9sc6wnnano8synuk")
+  precios         precios?          @relation(fields: [precio_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKah37frhi5ab0uf605umis1m37")
+  categoria       categoria?        @relation(fields: [categoria_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKpg3xiei77fmdbpx20n8i9txs6")
+
+  @@index([categoria_id], map: "FKpg3xiei77fmdbpx20n8i9txs6")
+}
+
+model provincia {
+  id        BigInt      @id @default(autoincrement())
+  nombre    String?     @db.VarChar(255)
+  pais_id   BigInt?
+  activo    Boolean?    @db.Bit(1)
+  localidad localidad[]
+  pais      pais?       @relation(fields: [pais_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKm4s599988w0v1q1nw6dyo5t2m")
+
+  @@index([pais_id], map: "FKm4s599988w0v1q1nw6dyo5t2m")
+}
+
+model talla {
+  id             BigInt           @id @default(autoincrement())
+  talla          String?          @db.VarChar(255)
+  activo         Boolean?         @db.Bit(1)
+  producto_talle producto_talle[] @ignore
+  usuarios       usuarios[]
+}
+
+model usuarios {
+  id                                         BigInt      @id @default(autoincrement())
+  dni                                        String?     @db.VarChar(255)
+  email                                      String?     @db.VarChar(255)
+  nombre                                     String?     @db.VarChar(255)
+  constrase_a                                String?     @map("constraseña") @db.VarChar(255)
+  usuario                                    Int?        @db.TinyInt
+  direccion_id                               BigInt?
+  talla_id                                   BigInt?
+  rol                                        Int?        @db.TinyInt
+  activo                                     Boolean?    @db.Bit(1)
+  fecha_nacimiento                           DateTime?   @db.DateTime(6)
+  apellido                                   String?     @db.VarChar(255)
+  numero_telefonico                          Int?
+  sexo                                       String?     @db.VarChar(255)
+  nombre_usuario                             String?     @db.VarChar(255)
+  direccion_direccion_user_idTousuarios      direccion[] @relation("direccion_user_idTousuarios")
+  factura                                    factura[]
+  direccion_usuarios_direccion_idTodireccion direccion?  @relation("usuarios_direccion_idTodireccion", fields: [direccion_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKca4tgd5e0gnem264iqbtm41up")
+  talla                                      talla?      @relation(fields: [talla_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKrbctt49dyt3gnixokbmn35nc4")
+
+  @@index([direccion_id], map: "FKca4tgd5e0gnem264iqbtm41up")
+  @@index([talla_id], map: "FKrbctt49dyt3gnixokbmn35nc4")
+}
