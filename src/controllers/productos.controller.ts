@@ -110,3 +110,50 @@ export const updateProduct = async (req: Request, res: Response) => {
         }
     }
 }
+
+export const patchProduct = async (req: Request, res: Response) => {
+    const id = Number(req.params.id)
+    
+    try {
+        const body = Boolean(req.body)
+
+        const producto = await productosServices.getProductById(id)
+        if(!producto){
+           res.status(404).json({error: `Error al encontrar el producto con id: ${id}`})
+           return
+        }else{
+
+            
+            
+        const updatedProducto = await productosServices.patchProduct(body, id)
+        
+        if(!updatedProducto){
+
+            res.status(400).json({error: 'Error al patchear el producto'})
+            return
+            
+        }else{
+            
+            res.status(200).json(
+              utils.convertBigIntFields(updatedProducto)
+            )
+            return
+        }
+    }
+        
+        
+    } catch (err: unknown) {
+        
+        if(err instanceof Error){
+
+           res.status(500).json({error: err.message})
+           return
+
+        }else{
+
+           res.status(500).json({error: 'Error desconocido'})
+           return
+
+        }
+    }
+}

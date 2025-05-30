@@ -14,4 +14,8 @@ router.get("/:id", productosController.getProductById)
 
 router.put("/:id", productosController.updateProduct)
 
+// Disable / Enable
+
+router.patch('/:id', productosController.patchProduct)
+
 export default router

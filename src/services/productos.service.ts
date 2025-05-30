@@ -23,3 +23,8 @@ export const updateProduct = (
         data,
     })
 }
+
+export const patchProduct = (activo: boolean, id: number) => {
+    return prisma.productos.update({where: {id},
+    data: {activo}})
+}
