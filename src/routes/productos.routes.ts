@@ -6,7 +6,7 @@ const router = express.Router()
 
 // Post
 
-router.post('/', productosController.createProduct)
+router.post('/', productosController.postProduct)
 
 
 // Get`s
