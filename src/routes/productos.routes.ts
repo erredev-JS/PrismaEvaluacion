@@ -10,4 +10,8 @@ router.get('/', productosController.getAllProducts)
 
 router.get("/:id", productosController.getProductById)
 
+// Update
+
+router.put("/:id", productosController.updateProduct)
+
 export default router
