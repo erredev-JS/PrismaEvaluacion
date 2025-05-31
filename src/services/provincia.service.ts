@@ -26,6 +26,9 @@ export const createProvince = async(data : {
             ...provinceData,
             pais : {
                 connect: {id : pais_id} // Relaciono la provincia con el pais
+            },
+            localidad : {
+                // Se crea array vacio
             }
         }
     })
@@ -52,7 +55,7 @@ export const updateProvince = async (
     const existingLocalities = await prisma.localidad.findMany({
         where: { id: { in: localidad } },
         select: { id: true },
-    });
+    })
 
     if (existingLocalities.length !== localidad.length) {
         throw new Error(
