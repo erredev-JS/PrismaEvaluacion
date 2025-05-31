@@ -6,7 +6,7 @@ import * as utils from '../utils/utils'
 export const postCategory = async (req: Request, res: Response) => {
     const {nombre, activo} = req.body
 
-    if(!nombre || !activo){
+    if(!nombre || activo == undefined){
         res.status(400).json({ error: 'Faltan atributos obligatorios' })
         return
     }
@@ -115,7 +115,7 @@ export const updateCategory = async (req: Request, res: Response) => {
     try {
         const producto = await categoriasServices.getCategoriaById(id)
         if(!producto){
-           res.status(404).json({error: `Error al encontrar la categoria con el id: ${id}`})
+           res.status(404).json({error: 'Error al encontrar la categoria'})
            return
         }else{
 
@@ -155,21 +155,22 @@ export const updateCategory = async (req: Request, res: Response) => {
 }
 
 
-export const patchProduct = async (req: Request, res: Response) => {
-    const id = Number(req.params.id)
-    
+export const patchCategory = async (req: Request, res: Response) => {
     try {
-        const body = Boolean(req.body)
+
+        const id = Number(req.params.id)
+        const { activo } = req.body
 
         const producto = await categoriasServices.getCategoriaById(id)
+
         if(!producto){
-           res.status(404).json({error: `Error al encontrar la categoria con id: ${id}`})
+           res.status(404).json({error: 'Error al encontrar la categoria'})
            return
         }else{
 
             
             
-        const updatedProducto = await categoriasServices.patchCategoria(id, body)
+        const updatedProducto = await categoriasServices.patchCategoria(id, activo)
         
         if(!updatedProducto){
 

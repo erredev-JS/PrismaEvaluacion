@@ -21,6 +21,6 @@ router.put("/:id", categoriasController.updateCategory)
 
 // Disable / Enable
 
-router.patch('/:id', categoriasController.patchProduct)
+router.patch('/:id', categoriasController.patchCategory)
 
 export default router
