@@ -53,6 +53,42 @@ export const getCountryById = async(req : Request, res : Response) => {
     }
 }
 
+export const createCountry = async (req : Request, res : Response) => {
+    const{
+        nombre,
+        activo,
+        
+    } = req.body
+
+    if (!nombre || !activo){
+        res.status(400).json({error : 'Faltan atributos en el body'})
+        return
+    }
+
+    const body = {
+        nombre, activo
+    }
+
+    try {
+        const newCountry = await paisServices.createCountry(body)
+        if (!newCountry){
+            res.status(400).json({error : 'Error al crear el pais'})
+            return
+        } else {
+            res.status(201).json(utils.convertBigIntFields(newCountry))
+            return
+        }
+    } catch (error : unknown) {
+        if (error instanceof Error){
+            res.status(500).json({error : error.message})
+            return
+        } else {
+            res.status(500).json({error : 'Error desconocido'})
+            return
+        }
+    }
+}
+
 
 export const updateCountry = async (req : Request, res : Response) => {
 

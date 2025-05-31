@@ -4,6 +4,22 @@ export const getAllCountries = () => prisma.pais.findMany()
 
 export const getCountryById = (id : number) => prisma.pais.findUnique({where : {id}})
 
+export const createCountry = (data: {
+    nombre: string;
+    activo: boolean;
+}) => {
+    return prisma.pais.create({
+        data: {
+            ...data,
+            provincia: {
+                // Se crea con provincias vacias
+            },
+        },
+    });
+};
+
+
+
 export const updateCountry = (
     data: {
         nombre : string,
