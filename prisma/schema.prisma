@@ -204,7 +204,7 @@ model usuarios {
   dni                                        String?     @db.VarChar(255)
   email                                      String?     @db.VarChar(255)
   nombre                                     String?     @db.VarChar(255)
-  constrase_a                                String?     @map("constraseña") @db.VarChar(255)
+  constrasenia                               String?     @db.VarChar(255)
   usuario                                    Int?        @db.TinyInt
   direccion_id                               BigInt?
   talla_id                                   BigInt?
