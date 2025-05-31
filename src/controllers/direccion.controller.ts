@@ -50,7 +50,7 @@ export const createAdress = async (req : Request, res : Response) =>{
 
     const {nombre, codigo_postal, numero, calle, user_id, localidad_id, activo} = req.body
 
-    if (!nombre || !codigo_postal || numero || calle || user_id || localidad_id || !activo){
+    if (!nombre || !codigo_postal || !numero || !calle || !user_id || !localidad_id || !activo){
         res.status(400).json({error : 'Faltan atributos en el body'})
         return
     }
@@ -106,14 +106,14 @@ export const updateAdress = async(req : Request, res : Response) => {
 export const patchAdress = async (req : Request, res : Response) => {
     const id = Number(req.params.id)
     try {
-        const body = Boolean(req.body)
+        const {activo} = req.body
         const address = await addresService.getAdressById(id)
 
         if (!address){
             res.status(404).json({error : 'No se encontro la direccion'})
             return
         } else {
-            const updatedAdress = await addresService.patchAdress(id, body)
+            const updatedAdress = await addresService.patchAdress(id, activo)
             if(!updateAdress){
                 res.status(400).json({error : 'No se pudo patchear la direccion'})
                 return

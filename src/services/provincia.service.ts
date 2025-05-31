@@ -79,6 +79,7 @@ export const updateProvince = async (
     })
 }
 
-export const patchProvince = (activo : boolean, id : number) => {
-    return prisma.provincia.update({where : {id}, data : {activo} })
+export const patchProvince = (activo: boolean, id: number) => {
+    return prisma.provincia.update({where: {id},
+    data: {activo}})
 }

@@ -16,6 +16,9 @@ export const createLocality = async(data : {
         where : {id : provincia_id}
     })
 
+    console.log(existingProvince);
+    
+
     if (!existingProvince) {
         throw new Error (`La provincia con id : ${provincia_id} no existe`)
     }

@@ -210,7 +210,7 @@ model usuarios {
   talla_id                                   BigInt?
   rol                                        Int?        @db.TinyInt
   activo                                     Boolean?    @db.Bit(1)
-  fecha_nacimiento                           DateTime?   @db.DateTime(6)
+  
   apellido                                   String?     @db.VarChar(255)
   numero_telefonico                          Int?
   sexo                                       String?     @db.VarChar(255)

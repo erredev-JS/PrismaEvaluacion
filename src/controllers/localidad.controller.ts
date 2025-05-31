@@ -122,7 +122,7 @@ export const patchLocality = async (req : Request, res : Response) =>{
     const id = Number(req.params.id)
         try {
     
-            const body = Boolean(req.body)
+            const {active}  = req.body
             const locality = await localityService.getLocalityById(id)
 
             if (!locality) {
@@ -131,7 +131,7 @@ export const patchLocality = async (req : Request, res : Response) =>{
 
             } else {
 
-                const updatedLocality = await localityService.patchLocality(body, id)
+                const updatedLocality = await localityService.patchLocality(active, id)
                 if (!updateLocality) {
                     res.status(400).json({error : 'Error al patchear la localidad'})
                     return

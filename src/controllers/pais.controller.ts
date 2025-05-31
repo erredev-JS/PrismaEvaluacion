@@ -132,7 +132,7 @@ export const patchPais = async(req : Request, res : Response) => {
     const id = Number(req.params.id)
 
     try {
-        const body = Boolean(req.body)
+        const {activo} = req.body
 
         const pais = await paisServices.getCountryById(id)
 
@@ -140,7 +140,7 @@ export const patchPais = async(req : Request, res : Response) => {
             res.status(404).json({error : 'Pais no encontrado'})
             return
         } else {
-            const updatedPais = await paisServices.patchCountry(body, id)
+            const updatedPais = await paisServices.patchCountry(activo, id)
 
             if(!updatedPais){
                 res.status(400).json({error : 'Error al patchear el pais'})
