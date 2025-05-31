@@ -17,8 +17,7 @@ export const getAllProducts = () => prisma.productos.findMany()
 
 export const getProductById = (id: number) => prisma.productos.findUnique({where: {id}})
 
-export const updateProduct = (
-    data: {
+export const updateProduct = (id: number, data: {
         nombre: string, 
         tipo_producto: number, 
         sexo: string, 
@@ -28,7 +27,7 @@ export const updateProduct = (
         descripcion: string, 
         stock: number, 
         activo: boolean
-    }, id: number
+    }
 ) => {
     return prisma.productos.update({
         where: {id},
@@ -36,7 +35,5 @@ export const updateProduct = (
     })
 }
 
-export const patchProduct = (activo: boolean, id: number) => {
-    return prisma.productos.update({where: {id},
+export const patchProduct = (id: number, activo: boolean) =>  prisma.productos.update({where: {id},
     data: {activo}})
-}

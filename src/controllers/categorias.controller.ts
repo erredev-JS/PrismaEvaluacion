@@ -159,6 +159,12 @@ export const patchCategory = async (req: Request, res: Response) => {
     try {
 
         const id = Number(req.params.id)
+
+        if (isNaN(id)) {
+            res.status(400).json({ error: "ID inválido" });
+            return;
+        }
+        
         const { activo } = req.body
 
         const producto = await categoriasServices.getCategoriaById(id)
