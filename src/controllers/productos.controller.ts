@@ -55,7 +55,6 @@ export const postProduct = async (req: Request, res: Response) => {
               utils.convertBigIntFields(createdProducto)
             )
             return
-
     
         }
             
@@ -144,7 +143,44 @@ export const getProductById = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
     const id = Number(req.params.id)
-    const body = req.body
+    const {
+    nombre,
+    tipo_producto,
+    sexo,
+    categoria_id,
+    precio_id,
+    imagen_id,
+    descripcion,
+    stock,
+    activo
+  } = req.body
+
+   if (
+    !nombre || 
+    !tipo_producto || 
+    !sexo || 
+    categoria_id === undefined ||
+    precio_id === undefined ||
+    imagen_id === undefined ||
+    !descripcion || 
+    stock === undefined || 
+    activo === undefined
+  ) {
+    res.status(400).json({ error: 'Faltan atributos obligatorios' })
+    return
+  }
+    const body = {
+    nombre,
+    tipo_producto,
+    sexo,
+    categoria_id,
+    precio_id,
+    imagen_id,
+    descripcion,
+    stock,
+    activo
+  }
+
     try {
         const producto = await productosServices.getProductById(id)
         if(!producto){
@@ -154,7 +190,7 @@ export const updateProduct = async (req: Request, res: Response) => {
 
             
             
-        const updatedProducto = await productosServices.updateProduct(body, id)
+        const updatedProducto = await productosServices.updateProduct(id, body)
         
         if(!updatedProducto){
 
@@ -196,7 +232,7 @@ export const patchProduct = async (req: Request, res: Response) => {
             return;
         }
 
-        const body = Boolean(req.body)
+        const { activo } = req.body
 
         const producto = await productosServices.getProductById(id)
         if(!producto){
@@ -206,7 +242,7 @@ export const patchProduct = async (req: Request, res: Response) => {
 
             
             
-        const updatedProducto = await productosServices.patchProduct(body, id)
+        const updatedProducto = await productosServices.patchProduct(id, activo)
         
         if(!updatedProducto){
 
