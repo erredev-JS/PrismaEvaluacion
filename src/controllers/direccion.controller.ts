@@ -48,15 +48,15 @@ export const getAdressById = async (req : Request, res : Response) =>{
 
 export const createAdress = async (req : Request, res : Response) =>{
 
-    const {nombre, codigo_postal, numero, calle, user_id, localidad_id, activo} = req.body
+    const {codigo_postal, numero, calle, user_id, localidad_id, activo} = req.body
 
-    if (!nombre || !codigo_postal || !numero || !calle || !user_id || !localidad_id || !activo){
+    if (!codigo_postal || !numero || !calle || !user_id || !localidad_id || !activo){
         res.status(400).json({error : 'Faltan atributos en el body'})
         return
     }
 
     try {
-        const newAddress = await addresService.createAdress({nombre, codigo_postal, numero, calle, user_id, localidad_id, activo })
+        const newAddress = await addresService.createAdress({codigo_postal, numero, calle, user_id, localidad_id, activo })
         res.status(201).json(utils.convertBigIntFields(newAddress))
         return
 
@@ -76,18 +76,21 @@ export const updateAdress = async(req : Request, res : Response) => {
     const id = Number(req.params.id)
     const { codigo_postal, numero, calle, user_id, localidad_id, activo} = req.body 
 
-    if (!codigo_postal || !numero || !calle || !user_id || !localidad_id || !activo){
+    if (!codigo_postal || !numero || !calle || !user_id || !localidad_id || typeof activo === 'undefined'){
         res.status(400).json({error : 'Faltan atributos en el body'})
         return
     }
 
     try {
         
-        const updateAddress = await addresService.getAdressById(id)
-        if (!updateAddress) {
+        const address = await addresService.getAdressById(id)
+        if (!address) {
             res.status(404).json({error : 'No se encontro la direccion'})
             return
         } else {
+            const updatedAdress = await addresService.updateAdress({
+                codigo_postal, numero, calle, user_id, localidad_id, activo
+            }, id)
             res.status(200).json(utils.convertBigIntFields(updateAdress))
             return
         }

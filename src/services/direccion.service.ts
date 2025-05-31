@@ -6,7 +6,6 @@ export const getAllAddresses = () => prisma.direccion.findMany()
 export const getAdressById = (id : number) => prisma.direccion.findUnique({where : {id}})
 
 export const createAdress = async(data : {
-    nombre : string,
     codigo_postal : number,
     numero : number,
     calle: string,
