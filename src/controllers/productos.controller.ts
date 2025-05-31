@@ -51,7 +51,7 @@ export const postProduct = async (req: Request, res: Response) => {
            return
         }else{
 
-            res.status(200).json(
+            res.status(201).json(
               utils.convertBigIntFields(createdProducto)
             )
             return
@@ -105,9 +105,9 @@ export const getAllProducts = async (req: Request, res: Response) => {
 }
 
 export const getProductById = async (req: Request, res: Response) => {
-    const id = Number(req.params.id)
     try {
         
+        const id = Number(req.params.id)
         const producto = await productosServices.getProductById(id)
         
         if(!producto){
@@ -148,7 +148,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     try {
         const producto = await productosServices.getProductById(id)
         if(!producto){
-           res.status(404).json({error: `Error al encontrar el producto con id: ${id}`})
+           res.status(404).json({error: 'Error al encontrar el producto'})
            return
         }else{
 
@@ -188,14 +188,19 @@ export const updateProduct = async (req: Request, res: Response) => {
 }
 
 export const patchProduct = async (req: Request, res: Response) => {
-    const id = Number(req.params.id)
-    
     try {
+        const id = Number(req.params.id)
+
+        if (isNaN(id)) {
+            res.status(400).json({ error: "ID inválido" });
+            return;
+        }
+
         const body = Boolean(req.body)
 
         const producto = await productosServices.getProductById(id)
         if(!producto){
-           res.status(404).json({error: `Error al encontrar el producto con id: ${id}`})
+           res.status(404).json({error: 'Error al encontrar el producto'})
            return
         }else{
 
