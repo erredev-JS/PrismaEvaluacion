@@ -10,8 +10,11 @@ router.get('/', provinciaController.getAllProvinces)
 // getById
 router.get('/:id', provinciaController.getProvinceById)
 
+// post
+router.post('/', provinciaController.createProvince)
+
 //put
-router.get('/:id', provinciaController.updateProvince)
+router.put('/:id', provinciaController.updateProvince)
 
 // patch
 router.patch('/:id', provinciaController.patchProvince)

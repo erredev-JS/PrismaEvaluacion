@@ -53,6 +53,42 @@ export const getCountryById = async(req : Request, res : Response) => {
     }
 }
 
+export const createCountry = async (req : Request, res : Response) => {
+    const{
+        nombre,
+        activo,
+        
+    } = req.body
+
+    if (!nombre || !activo){
+        res.status(400).json({error : 'Faltan atributos en el body'})
+        return
+    }
+
+    const body = {
+        nombre, activo
+    }
+
+    try {
+        const newCountry = await paisServices.createCountry(body)
+        if (!newCountry){
+            res.status(400).json({error : 'Error al crear el pais'})
+            return
+        } else {
+            res.status(201).json(utils.convertBigIntFields(newCountry))
+            return
+        }
+    } catch (error : unknown) {
+        if (error instanceof Error){
+            res.status(500).json({error : error.message})
+            return
+        } else {
+            res.status(500).json({error : 'Error desconocido'})
+            return
+        }
+    }
+}
+
 
 export const updateCountry = async (req : Request, res : Response) => {
 
@@ -96,7 +132,7 @@ export const patchPais = async(req : Request, res : Response) => {
     const id = Number(req.params.id)
 
     try {
-        const body = Boolean(req.body)
+        const {activo} = req.body
 
         const pais = await paisServices.getCountryById(id)
 
@@ -104,7 +140,7 @@ export const patchPais = async(req : Request, res : Response) => {
             res.status(404).json({error : 'Pais no encontrado'})
             return
         } else {
-            const updatedPais = await paisServices.patchCountry(body, id)
+            const updatedPais = await paisServices.patchCountry(activo, id)
 
             if(!updatedPais){
                 res.status(400).json({error : 'Error al patchear el pais'})

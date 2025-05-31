@@ -12,6 +12,9 @@ router.get('/', paisController.getAllCountries)
 
 router.get('/:id', paisController.getCountryById)
 
+// post
+router.post('/', paisController.createCountry)
+
 // update
 router.put('/:id', paisController.updateCountry)
 

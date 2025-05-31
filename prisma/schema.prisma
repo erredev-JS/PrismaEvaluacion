@@ -210,11 +210,6 @@ model usuarios {
   talla_id                                   BigInt?
   rol                                        Int?        @db.TinyInt
   activo                                     Boolean?    @db.Bit(1)
-  fecha_nacimiento                           DateTime?   @db.DateTime(6)
-  apellido                                   String?     @db.VarChar(255)
-  numero_telefonico                          Int?
-  sexo                                       String?     @db.VarChar(255)
-  nombre_usuario                             String?     @db.VarChar(255)
   direccion_direccion_user_idTousuarios      direccion[] @relation("direccion_user_idTousuarios")
   factura                                    factura[]
   direccion_usuarios_direccion_idTodireccion direccion?  @relation("usuarios_direccion_idTodireccion", fields: [direccion_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKca4tgd5e0gnem264iqbtm41up")
