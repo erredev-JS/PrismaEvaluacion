@@ -128,6 +128,7 @@ export const patchProvince = async (req: Request, res: Response) => {
         }
 
         res.status(200).json(utils.convertBigIntFields(updatedProvincia));
+        return
     } catch (error: unknown) {
         if (error instanceof Error) {
             res.status(500).json({ error: error.message });
