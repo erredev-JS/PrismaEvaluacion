@@ -59,6 +59,7 @@ export const createLocality = async (req : Request, res : Response) =>{
     try {
         const newLocality = await localityService.createLocality({nombre, activo, provincia_id})
         res.status(201).json(utils.convertBigIntFields(newLocality))
+        return
 
     } catch (error : unknown) {
         if (error instanceof Error){

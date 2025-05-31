@@ -65,38 +65,33 @@ export const createProvince = async( req : Request, res : Response) => {
 }
 
 export const updateProvince = async (req: Request, res: Response) => {
-    const id = Number(req.params.id); // Convertir a BigInt si es necesario
-    const { nombre, activo, localidad, pais } = req.body;
+    const id = Number(req.params.id); // Asegúrate de que este tipo coincida con el modelo
+    const { nombre, activo, localidad, pais_id } = req.body;
 
-    // Validar que los campos requeridos están presentes
-    if (!nombre || typeof activo === "undefined" || !localidad || !pais) {
+    if (!nombre || typeof activo === "undefined" || !pais_id) {
         res.status(400).json({ error: "Faltan atributos necesarios en el body" });
         return;
     }
 
     try {
-        
+        console.log("ID recibido:", id);
         const provincia = await provinciaService.getProvinceById(id);
+        console.log("Provincia encontrada:", provincia);
+
         if (!provincia) {
             res.status(404).json({ error: "Provincia no encontrada" });
             return;
         }
 
-        
         const updatedProvincia = await provinciaService.updateProvince(
-            { nombre, activo, localidad, pais },
+            { nombre, activo, localidad, pais: pais_id },
             id
         );
 
-        if (!updatedProvincia) {
-            res.status(400).json({ error: "Error al actualizar provincia" });
-            return;
-        }
-
         res.status(200).json(utils.convertBigIntFields(updatedProvincia));
-        return;
     } catch (error: unknown) {
         if (error instanceof Error) {
+            console.error("Error al actualizar provincia:", error);
             res.status(500).json({ error: error.message });
         } else {
             res.status(500).json({ error: "Error desconocido" });

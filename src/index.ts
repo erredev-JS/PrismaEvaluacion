@@ -5,6 +5,7 @@ import paisRoutes from './routes/pais.routes'
 import categoriasRoutes from './routes/categorias.routes'
 import provinciaRoutes from './routes/provincia.routes'
 import localidadRoutes from './routes/localidad.routes'
+import direccionRoutes from './routes/direccion.routes'
 import coloresRoutes from './routes/colores.routes'
 
 const app = express()
@@ -19,6 +20,7 @@ app.use('/categorias', categoriasRoutes)
 app.use('/pais', paisRoutes)
 app.use('/provincia', provinciaRoutes)
 app.use('/localidad', localidadRoutes)
+app.use('/direccion', direccionRoutes)
 app.use('/colores', coloresRoutes)
 
 

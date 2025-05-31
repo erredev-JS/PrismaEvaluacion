@@ -32,6 +32,7 @@ export const updateCountry = (
     return prisma.pais.update({
         where : {id},
         data : {
+            ...data,
             ...paisData,
             provincia : {
                 set : provincia.map((provinciaId) => ({id: provinciaId})) // Cambia el array de provincias

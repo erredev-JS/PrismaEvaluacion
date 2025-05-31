@@ -1,5 +1,5 @@
 import express from 'express'
-import * as localityController from '../controllers/loclaity.controller'
+import * as localityController from '../controllers/localidad.controller'
 
 const router = express()
 
