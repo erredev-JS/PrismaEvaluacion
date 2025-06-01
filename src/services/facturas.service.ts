@@ -9,7 +9,7 @@ export const createBill = (data: {
         direccion_comprador: string, 
         dni_comprador: string, 
         nombre_comprador: string,
-        detalle_factura: {
+        detalle_factura?: {
             monto: number, 
             cantidad: number,
             subtotal: number,
@@ -25,9 +25,7 @@ export const createBill = (data: {
 		direccion_comprador: data.direccion_comprador,
 		dni_comprador: data.dni_comprador,
 		nombre_comprador: data.nombre_comprador,
-		detalle_factura: {
-			create: data.detalle_factura // 👈 importante
-		}
+		...(data.detalle_factura && { detalle_factura: { create: data.detalle_factura } })
     }})
 
 export const getAllBills = () => prisma.factura.findMany()
@@ -53,6 +51,7 @@ export const updateBill = (
 }
 
 export const patchFactura = (activo: boolean, id: number) => {
-    return prisma.factura.update({where: {id},
+    return prisma.factura.update({
+    where: {id},
     data: {activo}})
 }

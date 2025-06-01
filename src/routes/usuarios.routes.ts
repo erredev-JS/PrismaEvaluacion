@@ -6,7 +6,7 @@ const router = Router()
 
 // Post
 
-router.post('/', usuariosController.createUser)
+router.post('/', usuariosController.postUser)
 
 
 // Get`s

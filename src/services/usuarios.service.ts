@@ -9,11 +9,7 @@ export const createUser = (data:{
     direccion_id: number,
     talla_id: number,
     activo: boolean,
-    fecha_nacimiento: Date,
-    apellido: string,
-    numero_telefonico: number,
-    sexo: string,
-    nombre_usuario: string
+    
 }) => prisma.usuarios.create({data})
 
 
@@ -30,11 +26,7 @@ export const updateUser = (data:{
     direccion_id: number,
     talla_id: number,
     activo: boolean,
-    fecha_nacimiento: Date,
-    apellido: string,
-    numero_telefonico: number,
-    sexo: string,
-    nombre_usuario: string
+    
 }, id:number
 ) => {
     return prisma.usuarios.update({
@@ -44,7 +36,7 @@ export const updateUser = (data:{
 }
 
 export const patchUser = (activo: boolean, id:number) => {
-    return prisma.productos.update({
+    return prisma.usuarios.update({
         where:{id}, 
         data:{activo}
     })

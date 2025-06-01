@@ -4,55 +4,64 @@ import * as utils from '../utils/utils'
 
 
 
-export const createUser = async (req: Request, res: Response) => {
-    try {
-        const body = req.body
-        const usuario = await usuariosServices.createUser(body)
-        if (!usuario) {
-          res.status(404).json({ error: 'Error al crear el producto' })
-          return
-        } else {
-          res.status(200).json(utils.convertBigIntFields(usuario))
-          return
+
+
+export const postUser = async (req: Request, res: Response) => {
+	try {
+		const {
+			dni,
+			email,
+			nombre,
+			contrasenia,
+			usuario,
+			direccion_id,
+			talla_id,
+			activo,
+			
+		} = req.body
+
+		// Verificamos los campos obligatorios como en el ejemplo:
+		if (
+			!contrasenia ||
+			!dni ||
+			!email
+		) {
+            res.status(400).json({ error: 'Faltan atributos obligatorios' })
+            return 
+		}
+
+		const body = {
+			dni,
+			email,
+			nombre,
+			contrasenia,
+			usuario,
+			direccion_id,
+			talla_id,
+			activo,
+		}
+
+		const newUser = await usuariosServices.createUser(body)
+		if (!newUser) {
+            res.status(404).json({ error: 'Error al crear el usuario' })
+			
+            return 
+		}else{
+            
+            res.status(201).json(utils.convertBigIntFields(newUser))
+            return
         }
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          res.status(500).json({ error: err.message })
-          return
-        } else {
-          res.status(500).json({ error: 'Error desconocido' })
-          return
-        }
-      }
+
+	} catch (err: unknown) {
+		if (err instanceof Error) {
+            res.status(500).json({ error: err.message })
+			return 
+		} else {
+            res.status(500).json({ error: 'Error desconocido' })
+			return 
+		}
+	}
 }
-
-// export const createUser = async (req:Request, res:Response) => {
-//     try {
-//         const userSended = req.body
-
-//         const requiredFields = ['constrasenia', 'nombre_usuario', 'dni', 'email']
-// 		const missingField = requiredFields.find((field) => !userSended[field])
-
-// 		if (missingField) {
-// 			return res.status(400).json({ error: `Falta el campo obligatorio: ${missingField}` })
-// 		}else{
-//             const newUser = await usuariosServices.createUser(userSended)
-//             res.status(201).json(utils.convertBigIntFields(newUser))
-//             return
-
-//         }
-
-
-//     }catch (err: unknown) {
-//         if (err instanceof Error) {
-//       res.status(500).json({ error: err.message })
-//       return
-//     } else {
-//       res.status(500).json({ error: 'Error desconocido' })
-//       return
-//     }
-//   }
-// }
 
 export const getAllUsers = async (req:Request, res:Response) => {
     try {

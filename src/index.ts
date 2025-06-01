@@ -11,6 +11,8 @@ import direccionRoutes from './routes/direccion.routes'
 import tallaRoutes from './routes/talla.routes'
 import coloresRoutes from './routes/colores.routes'
 import usuariosRoutes from './routes/usuarios.routes'
+import facturasRoutes from './routes/facturas.routes'
+import detalleFacturasRoutes from './routes/detalle_facturas.router'
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -30,7 +32,8 @@ app.use('/direccion', direccionRoutes)
 app.use('/talla', tallaRoutes)
 app.use('/colores', coloresRoutes)
 app.use('/usuarios', usuariosRoutes)
-
+app.use('/facturas', facturasRoutes)
+app.use('/detalle_facturas', detalleFacturasRoutes)
 
 
 app.listen(PORT, () => {
