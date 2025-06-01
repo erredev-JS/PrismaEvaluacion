@@ -1,0 +1,1991 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API con Express y TypeScript",
+    "version": "1.0.0",
+    "description": "Documentación generada con swagger-jsdoc"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/categorias": {
+      "get": {
+        "summary": "Obtiene todas las categorías",
+        "tags": [
+          "Categorias"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de categorías"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea una nueva categoría (requiere autenticación)",
+        "tags": [
+          "Categorias"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Categoría creada"
+          }
+        },
+        "requestBody": {
+          "description": "Datos para crear una categoría",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categorias/{id}": {
+      "get": {
+        "summary": "Obtiene una categoría por ID",
+        "tags": [
+          "Categorias"
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoría encontrada"
+          },
+          "404": {
+            "description": "Categoría no encontrada"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la categoría"
+          }
+        ]
+      },
+      "put": {
+        "summary": "Actualiza una categoría por ID (requiere autenticación)",
+        "tags": [
+          "Categorias"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoría actualizada"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la categoría a actualizar"
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar la categoría",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva una categoría (requiere autenticación)",
+        "tags": [
+          "Categorias"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la categoría"
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/colores": {
+      "get": {
+        "summary": "Obtiene todos los colores",
+        "tags": [
+          "Colores"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de colores"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea un nuevo color (requiere autenticación)",
+        "tags": [
+          "Colores"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Color creado"
+          }
+        }
+      }
+    },
+    "/colores/{id}": {
+      "get": {
+        "summary": "Obtiene un color por ID",
+        "tags": [
+          "Colores"
+        ],
+        "responses": {
+          "200": {
+            "description": "Color encontrado"
+          },
+          "404": {
+            "description": "Color no encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza un color por ID (requiere autenticación)",
+        "tags": [
+          "Colores"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Color actualizado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva un color (requiere autenticación)",
+        "tags": [
+          "Colores"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/direccion": {
+      "get": {
+        "summary": "Obtiene todas las direcciones",
+        "tags": [
+          "Direccion"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de direcciones"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea una dirección nueva (requiere autenticación)",
+        "tags": [
+          "Direccion"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para crear dirección",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "calle",
+                  "numero"
+                ],
+                "properties": {
+                  "calle": {
+                    "type": "string"
+                  },
+                  "numero": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Dirección creada"
+          }
+        }
+      }
+    },
+    "/direccion/{id}": {
+      "get": {
+        "summary": "Obtiene una dirección por ID",
+        "tags": [
+          "Direccion"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la dirección"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dirección encontrada"
+          },
+          "404": {
+            "description": "Dirección no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza una dirección por ID (requiere autenticación)",
+        "tags": [
+          "Direccion"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la dirección"
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar dirección",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "calle": {
+                    "type": "string"
+                  },
+                  "numero": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dirección actualizada"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva una dirección (requiere autenticación)",
+        "tags": [
+          "Direccion"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la dirección"
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/facturas": {
+      "get": {
+        "summary": "Obtiene todas las facturas",
+        "tags": [
+          "Facturas"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de facturas"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea una nueva factura (requiere autenticación)",
+        "tags": [
+          "Facturas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para crear la factura",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "clienteId": {
+                    "type": "string"
+                  },
+                  "total": {
+                    "type": "number"
+                  },
+                  "fecha": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Factura creada"
+          }
+        }
+      }
+    },
+    "/facturas/{id}": {
+      "get": {
+        "summary": "Obtiene una factura por ID",
+        "tags": [
+          "Facturas"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la factura"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Factura encontrada"
+          },
+          "404": {
+            "description": "Factura no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza una factura por ID (requiere autenticación)",
+        "tags": [
+          "Facturas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la factura"
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar la factura",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "total": {
+                    "type": "number"
+                  },
+                  "fecha": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Factura actualizada"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva una factura (requiere autenticación)",
+        "tags": [
+          "Facturas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la factura"
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/imagenes": {
+      "get": {
+        "summary": "Obtiene todas las imágenes",
+        "tags": [
+          "Imágenes"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de imágenes"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea una nueva imagen (requiere autenticación)",
+        "tags": [
+          "Imágenes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Datos de la nueva imagen",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "productoId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "url",
+                  "productoId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Imagen creada"
+          }
+        }
+      }
+    },
+    "/imagenes/{id}": {
+      "get": {
+        "summary": "Obtiene una imagen por ID",
+        "tags": [
+          "Imágenes"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID de la imagen",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Imagen encontrada"
+          },
+          "404": {
+            "description": "Imagen no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza una imagen por ID (requiere autenticación)",
+        "tags": [
+          "Imágenes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID de la imagen",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar la imagen",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "productoId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Imagen actualizada"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva una imagen (requiere autenticación)",
+        "tags": [
+          "Imágenes"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID de la imagen",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/localidad": {
+      "get": {
+        "summary": "Obtiene todas las localidades",
+        "tags": [
+          "Localidades"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de localidades"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea una nueva localidad (requiere autenticación)",
+        "tags": [
+          "Localidades"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Datos de la nueva localidad",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "provinciaId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nombre",
+                  "provinciaId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Localidad creada"
+          }
+        }
+      }
+    },
+    "/localidad/{id}": {
+      "get": {
+        "summary": "Obtiene una localidad por ID",
+        "tags": [
+          "Localidades"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID de la localidad",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Localidad encontrada"
+          },
+          "404": {
+            "description": "Localidad no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza una localidad por ID (requiere autenticación)",
+        "tags": [
+          "Localidades"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID de la localidad",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar la localidad",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "provinciaId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Localidad actualizada"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva una localidad (requiere autenticación)",
+        "tags": [
+          "Localidades"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID de la localidad",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/pais": {
+      "get": {
+        "summary": "Obtiene todos los países",
+        "tags": [
+          "Países"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de países"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea un nuevo país (requiere autenticación)",
+        "tags": [
+          "Países"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Datos del nuevo país",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nombre"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "País creado"
+          }
+        }
+      }
+    },
+    "/pais/{id}": {
+      "get": {
+        "summary": "Obtiene un país por ID",
+        "tags": [
+          "Países"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID del país",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "País encontrado"
+          },
+          "404": {
+            "description": "País no encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza un país por ID (requiere autenticación)",
+        "tags": [
+          "Países"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID del país",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar el país",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "País actualizado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva un país (requiere autenticación)",
+        "tags": [
+          "Países"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "ID del país",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/precios": {
+      "get": {
+        "summary": "Obtiene todos los precios",
+        "tags": [
+          "Precios"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de precios"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea un nuevo precio (requiere autenticación)",
+        "tags": [
+          "Precios"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "valor": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "valor"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Precio creado"
+          }
+        }
+      }
+    },
+    "/precios/{id}": {
+      "get": {
+        "summary": "Obtiene un precio por ID",
+        "tags": [
+          "Precios"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Precio encontrado"
+          },
+          "404": {
+            "description": "Precio no encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza un precio por ID (requiere autenticación)",
+        "tags": [
+          "Precios"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "valor": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Precio actualizado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva un precio (requiere autenticación)",
+        "tags": [
+          "Precios"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/productos": {
+      "get": {
+        "summary": "Obtiene todos los productos",
+        "tags": [
+          "Productos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de productos"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea un nuevo producto (requiere autenticación)",
+        "tags": [
+          "Productos"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "descripcion": {
+                    "type": "string"
+                  },
+                  "precio": {
+                    "type": "number"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "nombre",
+                  "precio"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto creado"
+          }
+        }
+      }
+    },
+    "/productos/{id}": {
+      "get": {
+        "summary": "Obtiene un producto por ID",
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Producto encontrado"
+          },
+          "404": {
+            "description": "Producto no encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza un producto por ID (requiere autenticación)",
+        "tags": [
+          "Productos"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "descripcion": {
+                    "type": "string"
+                  },
+                  "precio": {
+                    "type": "number"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Producto actualizado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva un producto (requiere autenticación)",
+        "tags": [
+          "Productos"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/provincia": {
+      "get": {
+        "summary": "Obtiene todas las provincias",
+        "tags": [
+          "Provincias"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de provincias"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea una nueva provincia (requiere autenticación)",
+        "tags": [
+          "Provincias"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nombre"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Provincia creada"
+          }
+        }
+      }
+    },
+    "/provincia/{id}": {
+      "get": {
+        "summary": "Obtiene una provincia por ID",
+        "tags": [
+          "Provincias"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Provincia encontrada"
+          },
+          "404": {
+            "description": "Provincia no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza una provincia por ID (requiere autenticación)",
+        "tags": [
+          "Provincias"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Provincia actualizada"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva una provincia (requiere autenticación)",
+        "tags": [
+          "Provincias"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/talla": {
+      "get": {
+        "summary": "Obtiene todas las tallas",
+        "tags": [
+          "Tallas"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de tallas"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea una nueva talla (requiere autenticación)",
+        "tags": [
+          "Tallas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "nombre"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Talla creada"
+          }
+        }
+      }
+    },
+    "/talla/{id}": {
+      "get": {
+        "summary": "Obtiene una talla por ID",
+        "tags": [
+          "Tallas"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Talla encontrada"
+          },
+          "404": {
+            "description": "Talla no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza una talla por ID (requiere autenticación)",
+        "tags": [
+          "Tallas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Talla actualizada"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva una talla (requiere autenticación)",
+        "tags": [
+          "Tallas"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
+    "/usuarios/login": {
+      "post": {
+        "summary": "Login de usuario",
+        "tags": [
+          "Usuarios"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "user@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login exitoso, devuelve token de autenticación"
+          },
+          "401": {
+            "description": "Credenciales inválidas"
+          }
+        }
+      }
+    },
+    "/usuarios/register": {
+      "post": {
+        "summary": "Registro de nuevo usuario",
+        "tags": [
+          "Usuarios"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario creado exitosamente"
+          },
+          "400": {
+            "description": "Datos inválidos"
+          }
+        }
+      }
+    },
+    "/usuarios": {
+      "post": {
+        "summary": "Crear un nuevo usuario",
+        "tags": [
+          "Usuarios"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario creado"
+          }
+        }
+      },
+      "get": {
+        "summary": "Obtener todos los usuarios",
+        "tags": [
+          "Usuarios"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de usuarios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuario"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuarios/{id}": {
+      "put": {
+        "summary": "Actualizar usuario por ID",
+        "tags": [
+          "Usuarios"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID del usuario a actualizar"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuario actualizado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activar o desactivar usuario por ID",
+        "tags": [
+          "Usuarios"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID del usuario a activar o desactivar"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado del usuario modificado"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": [
+    {
+      "name": "Categorias",
+      "description": "Gestión de categorías de la tienda de ropa"
+    },
+    {
+      "name": "Colores",
+      "description": "Gestión de colores para productos"
+    },
+    {
+      "name": "Direccion",
+      "description": "Gestión de direcciones"
+    },
+    {
+      "name": "Facturas",
+      "description": "Gestión de facturas en la tienda"
+    },
+    {
+      "name": "Imágenes",
+      "description": "Gestión de imágenes de productos de la tienda"
+    },
+    {
+      "name": "Localidades",
+      "description": "Gestión de localidades para la tienda de ropa"
+    },
+    {
+      "name": "Países",
+      "description": "Gestión de países para la tienda de ropa"
+    },
+    {
+      "name": "Precios",
+      "description": "Gestión de precios de productos"
+    },
+    {
+      "name": "Productos",
+      "description": "Gestión de productos en la tienda de ropa"
+    },
+    {
+      "name": "Provincias",
+      "description": "Gestión de provincias para la tienda de ropa"
+    },
+    {
+      "name": "Tallas",
+      "description": "Gestión de tallas para la tienda de ropa"
+    },
+    {
+      "name": "Usuarios",
+      "description": "Gestión de usuarios en la tienda de ropa"
+    }
+  ]
+}
