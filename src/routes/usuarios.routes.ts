@@ -2,7 +2,26 @@ import {Router} from 'express'
 
 import * as usuariosController from '../controllers/usuarios.controller'
 
+
 const router = Router()
+
+// Login
+
+router.post('/login', usuariosController.login)
+
+// Register
+
+router.post('/register', usuariosController.register)
+
+import * as authControllers from '../controllers/authController'
+
+router.use((req, res, next) => {
+  if (req.method) {
+    authControllers.authenticateToken(req, res, next)
+  } else {
+    next()
+  }
+})
 
 // Post
 
@@ -23,14 +42,6 @@ router.put("/:id", usuariosController.updateUser)
 
 router.patch('/:id', usuariosController.patchUser)
 
-
-// Login
-
-router.post('/login', usuariosController.login)
-
-// Register
-
-router.post('/register', usuariosController.register)
 
 
 export default router

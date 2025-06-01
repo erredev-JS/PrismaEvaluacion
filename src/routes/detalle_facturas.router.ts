@@ -4,16 +4,30 @@ import * as detalleFacturasController from '../controllers/detalle_facturas.cont
 
 const router = Router()
 
-// Post
-
-router.post('/', detalleFacturasController.postDetalleFactura)
-
-
 // Get`s
 
 router.get('/', detalleFacturasController.getAllDetalleFacturas)
 
 router.get("/:id", detalleFacturasController.getDetalleFacturaById)
+
+// Requiere auth en los metodos despues de esta funcion
+
+import * as authControllers from '../controllers/authController'
+
+router.use((req, res, next) => {
+  if (req.method) {
+    authControllers.authenticateToken(req, res, next)
+  } else {
+    next()
+  }
+})
+
+
+// Post
+
+router.post('/', detalleFacturasController.postDetalleFactura)
+
+
 
 // Update
 

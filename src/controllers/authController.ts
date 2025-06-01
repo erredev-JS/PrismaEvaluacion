@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken'
 import { prisma } from '../db/client'
 import bcrypt from 'bcrypt'
@@ -42,3 +42,23 @@ export const hashPassword = async (plainPassword: string): Promise<string> => {
   const saltRounds = 10
   return await bcrypt.hash(plainPassword, saltRounds)
 }
+
+
+
+export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1] // Formato: "Bearer <token>"
+
+  if (!token) {
+    return res.status(401).json({ error: 'Token no proporcionado' })
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: 'Token inválido' })
+    }
+
+    // Podés guardar el usuario en req.user si querés usarlo luego
+    (req as any).user = user
+    next()
+  })}

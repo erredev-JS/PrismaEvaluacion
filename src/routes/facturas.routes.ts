@@ -4,16 +4,30 @@ import * as facturasController from '../controllers/facturas.controller'
 
 const router = Router()
 
-// Post
-
-router.post('/', facturasController.postBill)
-
-
 // Get`s
 
 router.get('/', facturasController.getAllBills)
 
 router.get("/:id", facturasController.getBillById)
+
+// Requiere auth en los metodos despues de esta funcion
+
+import * as authControllers from '../controllers/authController'
+
+router.use((req, res, next) => {
+  if (req.method) {
+    authControllers.authenticateToken(req, res, next)
+  } else {
+    next()
+  }
+})
+
+
+// Post
+
+router.post('/', facturasController.postBill)
+
+
 
 // Update
 

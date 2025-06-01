@@ -12,6 +12,19 @@ router.get('/', paisController.getAllCountries)
 
 router.get('/:id', paisController.getCountryById)
 
+// Requiere auth en los metodos despues de esta funcion
+
+import * as authControllers from '../controllers/authController'
+
+router.use((req, res, next) => {
+  if (req.method) {
+    authControllers.authenticateToken(req, res, next)
+  } else {
+    next()
+  }
+})
+
+
 // post
 router.post('/', paisController.createCountry)
 
