@@ -11,8 +11,9 @@ import direccionRoutes from './routes/direccion.routes'
 import tallaRoutes from './routes/talla.routes'
 import coloresRoutes from './routes/colores.routes'
 import usuariosRoutes from './routes/usuarios.routes'
+import descuentosRoutes from './routes/descuentos.routes'
 import facturasRoutes from './routes/facturas.routes'
-import detalleFacturasRoutes from './routes/detalle_facturas.router'
+import detalleFacturasRoutes from './routes/detalle_facturas.routes'
 import { setupSwagger } from './swagger'
 
 const app = express()
@@ -24,6 +25,7 @@ setupSwagger(app)
 
 app.use('/productos', productosRoutes)
 app.use('/imagenes', imagenesRoutes)
+app.use('/descuentos', descuentosRoutes)
 app.use('/precios', preciosRoutes)
 app.use('/categorias', categoriasRoutes)
 app.use('/pais', paisRoutes)

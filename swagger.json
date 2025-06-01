@@ -249,6 +249,187 @@
         }
       }
     },
+    "/descuento": {
+      "get": {
+        "summary": "Obtiene todos los descuentos",
+        "tags": [
+          "Descuento"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de descuentos"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea un nuevo descuento (requiere autenticación)",
+        "tags": [
+          "Descuento"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para crear descuento",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "porcentaje",
+                  "usuario_id"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "porcentaje": {
+                    "type": "number"
+                  },
+                  "usuario_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Descuento creado"
+          }
+        }
+      }
+    },
+    "/descuento/{id}": {
+      "get": {
+        "summary": "Obtiene un descuento por ID",
+        "tags": [
+          "Descuento"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID del descuento"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Descuento encontrado"
+          },
+          "404": {
+            "description": "Descuento no encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza un descuento por ID (requiere autenticación)",
+        "tags": [
+          "Descuento"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID del descuento"
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar el descuento",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "porcentaje": {
+                    "type": "number"
+                  },
+                  "usuario_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Descuento actualizado"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva un descuento (requiere autenticación)",
+        "tags": [
+          "Descuento"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID del descuento"
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado del descuento actualizado"
+          }
+        }
+      }
+    },
     "/direccion": {
       "get": {
         "summary": "Obtiene todas las direcciones",
@@ -1946,6 +2127,10 @@
     {
       "name": "Colores",
       "description": "Gestión de colores para productos"
+    },
+    {
+      "name": "Descuento",
+      "description": "Gestión de descuentos"
     },
     {
       "name": "Direccion",
