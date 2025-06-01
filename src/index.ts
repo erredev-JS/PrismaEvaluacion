@@ -13,13 +13,14 @@ import coloresRoutes from './routes/colores.routes'
 import usuariosRoutes from './routes/usuarios.routes'
 import facturasRoutes from './routes/facturas.routes'
 import detalleFacturasRoutes from './routes/detalle_facturas.router'
+import { setupSwagger } from './swagger'
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 
-
+setupSwagger(app)
 
 app.use('/productos', productosRoutes)
 app.use('/imagenes', imagenesRoutes)
@@ -38,4 +39,5 @@ app.use('/detalle_facturas', detalleFacturasRoutes)
 
 app.listen(PORT, () => {
     console.log('Server runneando en el puerto:', PORT)
+    console.log('DOCS en http://localhost:3000/api-docs')
 })
