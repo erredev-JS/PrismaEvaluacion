@@ -203,8 +203,8 @@ model usuarios {
   id                                         BigInt      @id @default(autoincrement())
   dni                                        String?     @db.VarChar(255)
   email                                      String?     @db.VarChar(255)
-  nombre                                     String?     @db.VarChar(255)
-  constrasenia                               String?     @db.VarChar(255)
+  nombre                                     String?     @unique  @db.VarChar(255)
+  contrasenia                                String     @db.VarChar(255)
   usuario                                    Int?        @db.TinyInt
   direccion_id                               BigInt?
   talla_id                                   BigInt?

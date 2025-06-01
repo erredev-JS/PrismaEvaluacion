@@ -1,5 +1,9 @@
 import { prisma } from '../db/client'
 
+import bcrypt from 'bcrypt'
+
+import * as authUtils from '../controllers/authController'
+
 export const createUser = (data:{
     dni: string,
     email: string,
@@ -15,7 +19,7 @@ export const createUser = (data:{
 
 export const getAllUsers = () => prisma.usuarios.findMany()
 
-export const getUserById = (id:number) => prisma.usuarios.findUnique({where:{id}})
+export const getUserById = (id: number) => prisma.usuarios.findUnique({where:{id}})
 
 export const updateUser = (data:{
     dni: string,
@@ -27,7 +31,7 @@ export const updateUser = (data:{
     talla_id: number,
     activo: boolean,
     
-}, id:number
+}, id: number
 ) => {
     return prisma.usuarios.update({
         where:{id},
@@ -40,4 +44,26 @@ export const patchUser = (activo: boolean, id:number) => {
         where:{id}, 
         data:{activo}
     })
+}
+
+// Login
+
+export const userValidate = async (nombre: string, contrasenia: string) => {
+
+    const user = await prisma.usuarios.findFirst({where: {nombre}})
+
+    if(!user || !user.contrasenia) return null
+
+        
+        const isPasswordValid = await bcrypt.compare(contrasenia, user.contrasenia)
+    
+        if(!isPasswordValid) return null
+
+
+        const token = await authUtils.generateToken({nombre})
+
+        return {user, token}
+
+
+
 }

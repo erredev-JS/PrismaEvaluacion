@@ -13,7 +13,7 @@ router.post('/', usuariosController.postUser)
 
 router.get('/', usuariosController.getAllUsers)
 
-router.get("/:id", usuariosController.getUserById)
+// router.get("/:id", usuariosController.getUserById)
 
 // Update
 
@@ -22,5 +22,15 @@ router.put("/:id", usuariosController.updateUser)
 // Disable / Enable
 
 router.patch('/:id', usuariosController.patchUser)
+
+
+// Login
+
+router.post('/login', usuariosController.login)
+
+// Register
+
+router.post('/register', usuariosController.register)
+
 
 export default router

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import * as usuariosServices from "../services/usuarios.service"
 import * as utils from '../utils/utils'
-
+import * as auhtUtils from '../controllers/authController'
 
 
 
@@ -168,4 +168,80 @@ export const patchUser = async (req:Request, res:Response) => {
   }
 }
 
+// Login 
 
+export const login = async (req: Request, res: Response) => {
+  const {nombre, contrasenia} = req.body
+
+  if(!nombre || !contrasenia){
+    res.status(400).json({error: 'Faltan credenciales'})
+  }
+
+  const result = await usuariosServices.userValidate(nombre, contrasenia)
+
+  if(!result){
+    res.status(401).json({error: 'Credenciales invalidas'})
+    return
+
+  }
+
+  res.json(utils.convertBigIntFields(result))
+
+}
+
+
+// Register 
+
+export const register = async (req: Request, res: Response) => {
+  try {
+    const {
+      dni,
+      email,
+      nombre,
+      contrasenia,
+      usuario,
+      direccion_id,
+      talla_id,
+      activo,
+    } = req.body
+
+    if (!contrasenia || !dni || !email) {
+      res.status(400).json({ error: 'Faltan atributos obligatorios' })
+      return
+    }
+
+    // Validar tipos de datos si es necesario
+    const parsedBody = {
+      dni: String(dni), // aseguramos que sea string
+      email,
+      nombre,
+      contrasenia,
+      usuario: Number(usuario), // aseguramos que sea number
+      direccion_id: Number(direccion_id),
+      talla_id: Number(talla_id),
+      activo: Boolean(activo)
+    }
+
+    // Hasheamos la contraseña
+    const hashedPassword = await auhtUtils.hashPassword(parsedBody.contrasenia)
+
+    // Creamos el usuario con la contraseña hasheada
+    const newUser = await usuariosServices.createUser({
+      ...parsedBody,
+      contrasenia: hashedPassword
+    })
+
+    if (!newUser) {
+      res.status(500).json({ error: 'Error al registrar usuario' })
+      return
+    }
+
+    res.status(201).json(utils.convertBigIntFields(newUser))
+  } catch (error) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: error.message })
+    } else {
+      res.status(500).json({ error: 'Error desconocido' })
+    }
+  }
+}
