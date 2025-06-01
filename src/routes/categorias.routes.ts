@@ -31,13 +31,6 @@ router.get('/', categoriasController.getAllCategories)
  *   get:
  *     summary: Obtiene una categoría por ID
  *     tags: [Categorias]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID de la categoría
  *     responses:
  *       200:
  *         description: Categoría encontrada
@@ -68,18 +61,6 @@ router.use((req, res, next) => {
  *     tags: [Categorias]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *       description: Datos para crear una categoría
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - nombre
- *             properties:
- *               nombre:
- *                 type: string
  *     responses:
  *       201:
  *         description: Categoría creada
@@ -96,23 +77,6 @@ router.post('/', categoriasController.postCategory)
  *     tags: [Categorias]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID de la categoría a actualizar
- *     requestBody:
- *       description: Datos para actualizar la categoría
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               nombre:
- *                 type: string
  *     responses:
  *       200:
  *         description: Categoría actualizada
@@ -129,23 +93,6 @@ router.put("/:id", categoriasController.updateCategory)
  *     tags: [Categorias]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID de la categoría
- *     requestBody:
- *       description: Estado activo o inactivo
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               activo:
- *                 type: boolean
  *     responses:
  *       200:
  *         description: Estado actualizado

@@ -1,16 +1,13 @@
 import express from "express"
 import * as coloresController from "../controllers/colores.controller"
-import * as authControllers from '../controllers/authController'
 
-const router = express.Router()
-
-// Swagger tags para Colores
 /**
  * @swagger
  * tags:
  *   name: Colores
- *   description: Gestión de colores para productos de la tienda
+ *   description: Gestión de colores para productos
  */
+const router = express.Router()
 
 /**
  * @swagger
@@ -30,13 +27,6 @@ router.get("/", coloresController.getAllColors)
  *   get:
  *     summary: Obtiene un color por ID
  *     tags: [Colores]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del color
  *     responses:
  *       200:
  *         description: Color encontrado
@@ -45,7 +35,8 @@ router.get("/", coloresController.getAllColors)
  */
 router.get("/:id", coloresController.getColorById)
 
-// Requiere auth en los métodos después de esta función
+import * as authControllers from '../controllers/authController'
+
 router.use((req, res, next) => {
   if (req.method) {
     authControllers.authenticateToken(req, res, next)
@@ -62,18 +53,6 @@ router.use((req, res, next) => {
  *     tags: [Colores]
  *     security:
  *       - bearerAuth: []
- *     requestBody:
- *       description: Datos para crear un color
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - nombre
- *             properties:
- *               nombre:
- *                 type: string
  *     responses:
  *       201:
  *         description: Color creado
@@ -88,23 +67,6 @@ router.post("/", coloresController.createColor)
  *     tags: [Colores]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del color
- *     requestBody:
- *       description: Datos para actualizar el color
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               nombre:
- *                 type: string
  *     responses:
  *       200:
  *         description: Color actualizado
@@ -119,23 +81,6 @@ router.put("/:id", coloresController.updateColor)
  *     tags: [Colores]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID del color
- *     requestBody:
- *       description: Estado activo o inactivo
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               activo:
- *                 type: boolean
  *     responses:
  *       200:
  *         description: Estado actualizado
