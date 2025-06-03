@@ -1,8 +1,24 @@
 import { prisma } from '../db/client'
 
-export const getAllCountries = () => prisma.pais.findMany()
+export const getAllCountries = () => prisma.pais.findMany({
+    include:{
+        provincia:{
+            include: {
+                localidad:true
+            }
+        }
+    }
+})
 
-export const getCountryById = (id : number) => prisma.pais.findUnique({where : {id}})
+export const getCountryById = (id : number) => prisma.pais.findUnique({where : {id},
+    include:{
+        provincia:{
+            include: {
+                localidad:true
+            }
+        }
+    }
+})
 
 export const createCountry = (data: {
     nombre: string;

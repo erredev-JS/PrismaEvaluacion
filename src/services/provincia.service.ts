@@ -1,9 +1,17 @@
 import { prisma } from "../db/client";
 
 
-export const getAllProvinces = () => prisma.provincia.findMany()
+export const getAllProvinces = () => prisma.provincia.findMany({
+    include: {
+                localidad:true
+            }
+})
 
-export const getProvinceById = (id : number) => prisma.provincia.findUnique({where: {id}})
+export const getProvinceById = (id : number) => prisma.provincia.findUnique({where: {id},
+    include: {
+                localidad:true
+            }
+})
 
 export const createProvince = async(data : {
     nombre : string,
