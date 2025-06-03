@@ -24,16 +24,30 @@ export const createProduct = (data: {
         activo: boolean
     }) => prisma.productos.create({data})
 
-export const getAllProducts = () => prisma.productos.findMany()
+export const getAllProducts = () => prisma.productos.findMany({
+     include: {
+        categoria: true,
+        precios: true,
+        imagenes: true,
+    }
+})
 
-export const getProductById = (id: number) => prisma.productos.findUnique({where: {id}})
+export const getProductById = (id: number) => prisma.productos.findUnique({where: {id},      include: {
+        categoria: true,
+        precios: true,
+        imagenes: true,
+    }})
 
 export const updateProduct = (id: number, data: Partial<Producto>
 ) => {
-    return prisma.productos.update({
+     return prisma.productos.update({
         where: {id},
         data,
-    })
+        include: {
+        categoria: true,
+        precios: true,
+        imagenes: true,
+    }})
 }
 
 export const patchProduct = (id: number, activo: boolean) =>  prisma.productos.update({where: {id},
