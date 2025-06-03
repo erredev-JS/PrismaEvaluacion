@@ -70,21 +70,37 @@ router.use((req, res, next) => {
  *             type: object
  *             required:
  *               - nombre
- *               - porcentaje
- *               - usuario_id
+ *               - fecha_desde
+ *               - fecha_hasta
+ *               - promocion_precio
+ *               - tiempo_desde
+ *               - tiempo_hasta
  *             properties:
  *               nombre:
  *                 type: string
- *               porcentaje:
+ *               descripcion:
+ *                 type: string
+ *               fecha_desde:
+ *                 type: string
+ *                 format: date
+ *               fecha_hasta:
+ *                 type: string
+ *                 format: date
+ *               tiempo_desde:
+ *                 type: string
+ *                 example: "08:00"
+ *               tiempo_hasta:
+ *                 type: string
+ *                 example: "18:00"
+ *               promocion_precio:
  *                 type: number
- *               usuario_id:
- *                 type: integer
  *               activo:
  *                 type: boolean
  *     responses:
  *       201:
  *         description: Descuento creado
  */
+
 router.post('/', discountController.postDescuento)
 
 /**
@@ -100,7 +116,7 @@ router.post('/', discountController.postDescuento)
  *         name: id
  *         required: true
  *         schema:
- *           type: string
+ *           type: integer
  *         description: ID del descuento
  *     requestBody:
  *       description: Datos para actualizar el descuento
@@ -112,16 +128,27 @@ router.post('/', discountController.postDescuento)
  *             properties:
  *               nombre:
  *                 type: string
- *               porcentaje:
+ *               descripcion:
+ *                 type: string
+ *               fecha_desde:
+ *                 type: string
+ *                 format: date
+ *               fecha_hasta:
+ *                 type: string
+ *                 format: date
+ *               tiempo_desde:
+ *                 type: string
+ *               tiempo_hasta:
+ *                 type: string
+ *               promocion_precio:
  *                 type: number
- *               usuario_id:
- *                 type: integer
  *               activo:
  *                 type: boolean
  *     responses:
  *       200:
  *         description: Descuento actualizado
  */
+
 router.put('/:id', discountController.updateDescuento)
 
 /**

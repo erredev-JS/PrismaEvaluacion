@@ -68,19 +68,37 @@ router.use((req, res, next) => {
  *             properties:
  *               nombre:
  *                 type: string
+ *               tipo_producto:
+ *                 type: string
+ *               sexo:
+ *                 type: string
+ *               categoria_id:
+ *                 type: integer
+ *               precio_id:
+ *                 type: integer
+ *               imagen_id:
+ *                 type: integer
  *               descripcion:
  *                 type: string
- *               precio:
- *                 type: number
+ *               stock:
+ *                 type: integer
  *               activo:
  *                 type: boolean
  *             required:
  *               - nombre
- *               - precio
+ *               - tipo_producto
+ *               - sexo
+ *               - categoria_id
+ *               - precio_id
+ *               - imagen_id
+ *               - descripcion
+ *               - stock
+ *               - activo
  *     responses:
  *       201:
  *         description: Producto creado
  */
+
 router.post('/', productosController.postProduct)
 
 /**
@@ -106,16 +124,37 @@ router.post('/', productosController.postProduct)
  *             properties:
  *               nombre:
  *                 type: string
+ *               tipo_producto:
+ *                 type: string
+ *               sexo:
+ *                 type: string
+ *               categoria_id:
+ *                 type: integer
+ *               precio_id:
+ *                 type: integer
+ *               imagen_id:
+ *                 type: integer
  *               descripcion:
  *                 type: string
- *               precio:
- *                 type: number
+ *               stock:
+ *                 type: integer
  *               activo:
  *                 type: boolean
+ *             required:
+ *               - nombre
+ *               - tipo_producto
+ *               - sexo
+ *               - categoria_id
+ *               - precio_id
+ *               - imagen_id
+ *               - descripcion
+ *               - stock
+ *               - activo
  *     responses:
  *       200:
  *         description: Producto actualizado
  */
+
 router.put('/:id', productosController.updateProduct)
 
 /**

@@ -27,6 +27,7 @@ export function setupSwagger(app: Express): void {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
-// ⚠️ Exportar a archivo
+// ⚠️ Exportar a archivo, descomentar solo si queremos actualizar la docs
+
 // import fs from 'fs'
 // fs.writeFileSync('./swagger.json', JSON.stringify(swaggerSpec, null, 2))
