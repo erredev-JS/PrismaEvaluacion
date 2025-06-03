@@ -22,6 +22,11 @@ export const postBill = async (req: Request, res:Response) => {
             res.status(400).json({error: "Faltan atributos obligatorios"})
             return
         }
+        const fecha = new Date(fecha_compra)
+        if (isNaN(fecha.getTime())) {
+          res.status(400).json({ error: 'Fecha inválida' })
+          return
+        }
     
         const body = {
             fecha_compra,
@@ -39,7 +44,7 @@ export const postBill = async (req: Request, res:Response) => {
             res.status(400).json({error:"Error al crear la factura"})
             return
         }else{
-            res.status(201).json(utils.convertBigIntFields(createdBill))
+            res.status(201).json(utils.convertBigIntFields(utils.convertDatesToISOString(createdBill)))
             return
         }
 
@@ -60,7 +65,7 @@ export const getAllBills = async (req:Request, res:Response) => {
     try {
         const facturas = await facturasServices.getAllBills()
 
-        res.status(200).json(utils.convertBigIntFields(facturas))
+        res.status(200).json(utils.convertBigIntFields(utils.convertDatesToISOString(facturas)))
         return
 
 
@@ -85,7 +90,7 @@ export const getBillById = async (req:Request, res:Response) => {
             res.status(400).json({error: "Factura no encotrada"})
             return
         }else{
-            res.status(200).json(utils.convertBigIntFields(factura))
+            res.status(200).json(utils.convertBigIntFields(utils.convertDatesToISOString(factura)))
             return
 
         }
@@ -145,7 +150,7 @@ export const updateBill = async (req: Request, res:Response) => {
             res.status(400).json({error:"Error al crear la factura"})
             return
         }else{
-            res.status(201).json(utils.convertBigIntFields(updatedBill))
+            res.status(201).json(utils.convertBigIntFields(utils.convertDatesToISOString(updatedBill)))
             return
         }
 
@@ -185,7 +190,7 @@ export const patchBill = async (req:Request, res:Response) => {
                 res.status(400).json({error: "Error al patchear la factura"})
                 return
             }else{
-                res.status(200).json(utils.convertBigIntFields(updatedBill))
+                res.status(200).json(utils.convertBigIntFields(utils.convertDatesToISOString(updatedBill)))
             }
         }
 

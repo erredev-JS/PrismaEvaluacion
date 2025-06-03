@@ -23,7 +23,7 @@ export const postDetalleFactura = async (req: Request, res: Response) => {
         if (
             !factura_id ||
             !producto_id ||
-            !precio_unitario || !subtotal || cantidad
+            !precio_unitario || !subtotal || !cantidad
         ) {
             res.status(400).json({ error: 'Faltan atributos obligatorios' })
             return 
@@ -141,17 +141,17 @@ export const patchDetalleFactura = async (req:Request, res:Response) => {
     try {
         const id = Number(req.params.id)
 
-        const body = Boolean(req.body)
+        const {activo} = req.body
         const DetalleFactura = await detalleFacturasServices.getDetalleFacturaById(id)
         if(!DetalleFactura){
             res.status(404).json({ error: `Error al encontrar el DetalleFactura con id: ${id}` })
             return
         } else{
-            const updatedUser = await detalleFacturasServices.patchDetalleFactura(body, id)
-            if(!updatedUser){
+            const updatedDetalleFactura = await detalleFacturasServices.patchDetalleFactura(activo, id)
+            if(!updatedDetalleFactura){
                 res.status(404).json({error: "error al patchear el DetalleFactura"})
             }else{
-                res.status(200).json(utils.convertBigIntFields(updatedUser))
+                res.status(200).json(utils.convertBigIntFields(updatedDetalleFactura))
                 return
             }
         }

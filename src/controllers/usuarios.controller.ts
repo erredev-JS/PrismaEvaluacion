@@ -143,13 +143,13 @@ export const patchUser = async (req:Request, res:Response) => {
     try {
         const id = Number(req.params.id)
 
-        const body = Boolean(req.body)
+        const {activo} = req.body
         const user = await usuariosServices.getUserById(id)
         if(!user){
             res.status(404).json({ error: `Error al encontrar el usuario con id: ${id}` })
             return
         } else{
-            const updatedUser = await usuariosServices.patchUser(body, id)
+            const updatedUser = await usuariosServices.patchUser(activo, id)
             if(!updatedUser){
                 res.status(404).json({error: "error al patchear el usuario"})
             }else{

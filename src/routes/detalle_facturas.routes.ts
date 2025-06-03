@@ -1,12 +1,12 @@
 import express from 'express'
-import * as categoriasController from '../controllers/categorias.controller'
+import * as detalleFacturasController from '../controllers/detalle_facturas.controller'
 
 // Swagger tags para Categorias
 /**
  * @swagger
  * tags:
- *   name: Categorias
- *   description: Gestión de categorías de la tienda de ropa
+ *   name: DetalleFactura
+ *   description: Gestión de detalle de las facturas de la tienda de ropa
  */
 
 const router = express.Router()
@@ -15,36 +15,36 @@ const router = express.Router()
 
 /**
  * @swagger
- * /categorias:
+ * /detalle-factura:
  *   get:
- *     summary: Obtiene todas las categorías
- *     tags: [Categorias]
+ *     summary: Obtiene todos los detalles de factura
+ *     tags: [DetalleFactura]
  *     responses:
  *       200:
- *         description: Lista de categorías
+ *         description: Lista de detalles
  */
-router.get('/', categoriasController.getAllCategories)
+router.get('/', detalleFacturasController.getAllDetalleFacturas)
 
 /**
  * @swagger
- * /categorias/{id}:
+ * /detalle-factura/{id}:
  *   get:
- *     summary: Obtiene una categoría por ID
- *     tags: [Categorias]
+ *     summary: Obtiene detalles de factura por ID
+ *     tags: [DetalleFactura]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: ID de la categoría
+ *         description: ID de DetalleFactura
  *     responses:
  *       200:
- *         description: Categoría encontrada
+ *         description: DetalleFactura encontrada
  *       404:
- *         description: Categoría no encontrada
+ *         description: DetalleFactura no encontrada
  */
-router.get("/:id", categoriasController.getCategoryById)
+router.get("/:id", detalleFacturasController.getDetalleFacturaById)
 
 // Requiere auth en los métodos después de esta función
 
@@ -62,38 +62,59 @@ router.use((req, res, next) => {
 
 /**
  * @swagger
- * /categorias:
+ * /detalle-factura:
  *   post:
- *     summary: Crea una nueva categoría (requiere autenticación)
- *     tags: [Categorias]
+ *     summary: Crea DetalleFactura (requiere autenticación)
+ *     tags: [DetalleFactura]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
- *       description: Datos para crear una categoría
+ *       description: Datos para crear DetalleFactura
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             required:
- *               - nombre
+ *               - monto
+ *               - cantidad
+ *               - subtotal
+ *               - precio_unitario
+ *               - factura_id
+ *               - producto_id
  *             properties:
- *               nombre:
- *                 type: string
+ *               monto:
+ *                 type: number
+ *               cantidad:
+ *                 type: integer
+ *               subtotal:
+ *                 type: number
+ *               precio_unitario:
+ *                 type: number
+ *               factura_id:
+ *                 type: integer
+ *               producto_id:
+ *                 type: integer
+ *               activo:
+ *                 type: boolean
  *     responses:
  *       201:
- *         description: Categoría creada
+ *         description: Detalle de factura creado exitosamente
+ *       400:
+ *         description: Datos faltantes o inválidos
+ *       500:
+ *         description: Error del servidor
  */
-router.post('/', categoriasController.postCategory)
+router.post('/', detalleFacturasController.postDetalleFactura)
 
 // Update
 
 /**
  * @swagger
- * /categorias/{id}:
+ * /detalle-factura/{id}:
  *   put:
- *     summary: Actualiza una categoría por ID (requiere autenticación)
- *     tags: [Categorias]
+ *     summary: Actualiza un detalle de factura por ID (requiere autenticación)
+ *     tags: [DetalleFactura]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -101,32 +122,48 @@ router.post('/', categoriasController.postCategory)
  *         name: id
  *         required: true
  *         schema:
- *           type: string
- *         description: ID de la categoría a actualizar
+ *           type: integer
+ *         description: ID del detalle de factura a actualizar
  *     requestBody:
- *       description: Datos para actualizar la categoría
+ *       description: Datos para actualizar el detalle de factura (pueden enviarse campos parciales)
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               nombre:
- *                 type: string
+ *               monto:
+ *                 type: number
+ *               cantidad:
+ *                 type: integer
+ *               subtotal:
+ *                 type: number
+ *               precio_unitario:
+ *                 type: number
+ *               factura_id:
+ *                 type: integer
+ *               producto_id:
+ *                 type: integer
+ *               activo:
+ *                 type: boolean
  *     responses:
- *       200:
- *         description: Categoría actualizada
+ *       201:
+ *         description: Detalle de factura actualizado exitosamente
+ *       404:
+ *         description: Detalle de factura no encontrado
+ *       500:
+ *         description: Error del servidor
  */
-router.put("/:id", categoriasController.updateCategory)
+router.put("/:id", detalleFacturasController.updateDetalleFactura)
 
 // Disable / Enable
 
 /**
  * @swagger
- * /categorias/{id}:
+ * /detalle-factura/{id}:
  *   patch:
- *     summary: Activa o desactiva una categoría (requiere autenticación)
- *     tags: [Categorias]
+ *     summary: Activa o desactiva un DetalleFactura(requiere autenticación)
+ *     tags: [DetalleFactura]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -135,7 +172,7 @@ router.put("/:id", categoriasController.updateCategory)
  *         required: true
  *         schema:
  *           type: string
- *         description: ID de la categoría
+ *         description: ID de DetalleFactura
  *     requestBody:
  *       description: Estado activo o inactivo
  *       required: true
@@ -150,6 +187,6 @@ router.put("/:id", categoriasController.updateCategory)
  *       200:
  *         description: Estado actualizado
  */
-router.patch('/:id', categoriasController.patchCategory)
+router.patch('/:id', detalleFacturasController.patchDetalleFactura)
 
 export default router

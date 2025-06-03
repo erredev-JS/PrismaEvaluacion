@@ -23,3 +23,19 @@ export const convertBigIntFields = (obj: any): any => {
     return obj;
   }
 }
+
+
+export const convertDatesToISOString = (obj: any):any => {
+	if (Array.isArray(obj)) {
+		return obj.map(convertDatesToISOString)
+	} else if (obj && typeof obj === 'object') {
+		for (const key in obj) {
+			if (obj[key] instanceof Date) {
+				obj[key] = obj[key].toISOString()
+			} else if (typeof obj[key] === 'object') {
+				obj[key] = convertDatesToISOString(obj[key])
+			}
+		}
+	}
+	return obj
+}

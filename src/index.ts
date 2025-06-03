@@ -36,7 +36,7 @@ app.use('/talla', tallaRoutes)
 app.use('/colores', coloresRoutes)
 app.use('/usuarios', usuariosRoutes)
 app.use('/facturas', facturasRoutes)
-app.use('/detalle_facturas', detalleFacturasRoutes)
+app.use('/detalle-facturas', detalleFacturasRoutes)
 
 
 app.listen(PORT, () => {

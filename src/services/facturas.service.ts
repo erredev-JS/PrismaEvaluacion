@@ -26,11 +26,26 @@ export const createBill = (data: {
 		dni_comprador: data.dni_comprador,
 		nombre_comprador: data.nombre_comprador,
 		...(data.detalle_factura && { detalle_factura: { create: data.detalle_factura } })
-    }})
+    },
+    include:{
+        detalle_factura: true
+    }
+})
 
-export const getAllBills = () => prisma.factura.findMany()
+export const getAllBills = () => prisma.factura.findMany({
+    include:{
+        detalle_factura: {
+            include:{
+                productos:true
+            }
+        }
+    }
+})
 
-export const getBillById = (id: number) => prisma.factura.findUnique({where: {id}})
+export const getBillById = (id: number) => prisma.factura.findUnique({where: {id},
+                    include:{
+                        detalle_factura:true
+                    }})
 
 export const updateBill = (
     data: {
