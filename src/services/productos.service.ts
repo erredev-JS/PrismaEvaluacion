@@ -1,5 +1,16 @@
 import { prisma } from '../db/client'
 
+interface Producto {
+  nombre: string;
+  tipo_producto: number;
+  sexo: string;
+  categoria_id: number;
+  precio_id: number;
+  imagen_id: number;
+  descripcion: string;
+  stock: number;
+  activo: boolean;
+}
 
 export const createProduct = (data: {
         nombre: string, 
@@ -17,17 +28,7 @@ export const getAllProducts = () => prisma.productos.findMany()
 
 export const getProductById = (id: number) => prisma.productos.findUnique({where: {id}})
 
-export const updateProduct = (id: number, data: {
-        nombre: string, 
-        tipo_producto: number, 
-        sexo: string, 
-        categoria_id: number,
-        precio_id: number, 
-        imagen_id: number, 
-        descripcion: string, 
-        stock: number, 
-        activo: boolean
-    }
+export const updateProduct = (id: number, data: Partial<Producto>
 ) => {
     return prisma.productos.update({
         where: {id},
