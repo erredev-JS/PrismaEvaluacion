@@ -87,10 +87,40 @@ router.use((req, res, next) => {
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Usuario'
+ *             type: object
+ *             properties:
+ *               dni:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               nombre:
+ *                 type: string
+ *               contrasenia:
+ *                 type: string
+ *               usuario:
+ *                 type: integer
+ *               direccion_id:
+ *                 type: integer
+ *               talla_id:
+ *                 type: integer
+ *               activo:
+ *                 type: boolean
+ *           example:
+ *             dni: "12457896"
+ *             email: "luispro@gmail.com"
+ *             nombre: "Luis"
+ *             contrasenia: "LuisContrasenia"
+ *             usuario: 0
+ *             direccion_id: 2
+ *             talla_id: 2
+ *             activo: true
  *     responses:
  *       201:
  *         description: Usuario creado
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error del servidor
  */
 router.post('/', usuariosController.postUser)
 
@@ -118,7 +148,7 @@ router.get('/', usuariosController.getAllUsers)
  * @swagger
  * /usuarios/{id}:
  *   put:
- *     summary: Actualizar usuario por ID
+ *     summary: Actualizar un usuario por ID
  *     tags: [Usuarios]
  *     security:
  *       - bearerAuth: []
@@ -126,7 +156,7 @@ router.get('/', usuariosController.getAllUsers)
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: integer
  *         required: true
  *         description: ID del usuario a actualizar
  *     requestBody:
@@ -134,10 +164,42 @@ router.get('/', usuariosController.getAllUsers)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Usuario'
+ *             type: object
+ *             properties:
+ *               dni:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               nombre:
+ *                 type: string
+ *               contrasenia:
+ *                 type: string
+ *               usuario:
+ *                 type: integer
+ *               direccion_id:
+ *                 type: integer
+ *               talla_id:
+ *                 type: integer
+ *               activo:
+ *                 type: boolean
+ *           example:
+ *             dni: "12457896"
+ *             email: "luispro@gmail.com"
+ *             nombre: "Luis Actualizado"
+ *             contrasenia: "NuevaContrasenia123"
+ *             usuario: 0
+ *             direccion_id: 2
+ *             talla_id: 2
+ *             activo: true
  *     responses:
  *       200:
  *         description: Usuario actualizado
+ *       400:
+ *         description: Error en los datos enviados
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error del servidor
  */
 router.put('/:id', usuariosController.updateUser)
 
@@ -145,7 +207,7 @@ router.put('/:id', usuariosController.updateUser)
  * @swagger
  * /usuarios/{id}:
  *   patch:
- *     summary: Activar o desactivar usuario por ID
+ *     summary: Activar o desactivar un usuario por ID
  *     tags: [Usuarios]
  *     security:
  *       - bearerAuth: []
@@ -153,10 +215,11 @@ router.put('/:id', usuariosController.updateUser)
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: integer
  *         required: true
- *         description: ID del usuario a activar o desactivar
+ *         description: ID del usuario a modificar
  *     requestBody:
+ *       description: Cambiar el estado del campo "activo"
  *       required: true
  *       content:
  *         application/json:
@@ -165,9 +228,17 @@ router.put('/:id', usuariosController.updateUser)
  *             properties:
  *               activo:
  *                 type: boolean
+ *             example:
+ *               activo: false
  *     responses:
  *       200:
  *         description: Estado del usuario modificado
+ *       400:
+ *         description: Error en los datos enviados
+ *       404:
+ *         description: Usuario no encontrado
+ *       500:
+ *         description: Error del servidor
  */
 router.patch('/:id', usuariosController.patchUser)
 

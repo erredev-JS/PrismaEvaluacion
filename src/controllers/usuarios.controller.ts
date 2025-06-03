@@ -24,7 +24,7 @@ export const postUser = async (req: Request, res: Response) => {
 		if (
 			!contrasenia ||
 			!dni ||
-			!email || !usuario
+			!email || usuario === undefined
 		) {
             res.status(400).json({ error: 'Faltan atributos obligatorios' })
             return 

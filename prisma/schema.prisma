@@ -208,7 +208,6 @@ model usuarios {
   usuario                                    Int?        @db.TinyInt
   direccion_id                               BigInt?
   talla_id                                   BigInt?
-  rol                                        Int?        @db.TinyInt
   activo                                     Boolean    @db.Bit(1)  @default(true)
   direccion_direccion_user_idTousuarios      direccion[] @relation("direccion_user_idTousuarios")
   factura                                    factura[]
