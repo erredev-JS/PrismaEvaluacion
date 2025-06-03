@@ -51,7 +51,7 @@ export const createLocality = async (req : Request, res : Response) =>{
 
     const {nombre, provincia_id, activo} = req.body
    
-    if (!nombre || !provincia_id || !activo){
+    if (!nombre || !provincia_id){
         res.status(400).json({error : 'Faltan atributos en el body'})
         return
     }
@@ -77,11 +77,6 @@ export const updateLocality = async (req : Request, res : Response) =>{
     const id = Number(req.params.id); 
         const { nombre, activo, direccion, provincia } = req.body;
     
-        // Validar que los campos requeridos están presentes
-        if (!nombre || typeof activo === "undefined" || !direccion || !provincia) {
-            res.status(400).json({ error: "Faltan atributos necesarios en el body" });
-            return;
-        }
     
         try {
             

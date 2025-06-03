@@ -68,11 +68,22 @@ router.use((req, res, next) => {
  *             properties:
  *               nombre:
  *                 type: string
+ *               pais_id:
+ *                 type: integer
  *             required:
  *               - nombre
+ *               - pais_id
+ *           example:
+ *             nombre: "Neuquen"
+ *             pais_id: 1
+ *             activo: true
  *     responses:
  *       201:
  *         description: Provincia creada
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error del servidor
  */
 router.post('/', provinciaController.createProvince)
 
@@ -99,6 +110,13 @@ router.post('/', provinciaController.createProvince)
  *             properties:
  *               nombre:
  *                 type: string
+ *               pais_id:
+ *                 type: integer
+ *
+ *           example:
+ *             nombre: "Santiago"
+ *             pais_id: 2
+ *             activo: true
  *     responses:
  *       200:
  *         description: Provincia actualizada
@@ -128,9 +146,17 @@ router.put('/:id', provinciaController.updateProvince)
  *             properties:
  *               activo:
  *                 type: boolean
+ *           example:
+ *             activo: true
  *     responses:
  *       200:
  *         description: Estado actualizado
+ *       400:
+ *         description: Datos inválidos enviados
+ *       404:
+ *         description: Color no encontrado
+ *       500:
+ *         description: Error del servidor
  */
 router.patch('/:id', provinciaController.patchProvince)
 

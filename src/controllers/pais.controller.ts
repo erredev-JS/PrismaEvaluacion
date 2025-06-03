@@ -60,7 +60,7 @@ export const createCountry = async (req : Request, res : Response) => {
         
     } = req.body
 
-    if (!nombre || !activo){
+    if (!nombre){
         res.status(400).json({error : 'Faltan atributos en el body'})
         return
     }

@@ -68,14 +68,21 @@ router.use((req, res, next) => {
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - nombre
  *             properties:
  *               nombre:
  *                 type: string
- *             required:
- *               - nombre
+ *           example:
+ *             nombre: "Francia"
+ *             activo: true
  *     responses:
  *       201:
  *         description: País creado
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error del servidor
  */
 router.post('/', paisController.createCountry)
 
@@ -104,9 +111,16 @@ router.post('/', paisController.createCountry)
  *             properties:
  *               nombre:
  *                 type: string
+ *           example:
+ *             nombre: "Francia"
+ *             activo: true
  *     responses:
  *       200:
  *         description: País actualizado
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error del servidor
  */
 router.put('/:id', paisController.updateCountry)
 
@@ -135,9 +149,17 @@ router.put('/:id', paisController.updateCountry)
  *             properties:
  *               activo:
  *                 type: boolean
+ *           example:
+ *             activo: true
  *     responses:
  *       200:
  *         description: Estado actualizado
+ *       400:
+ *         description: Datos inválidos enviados
+ *       404:
+ *         description: Color no encontrado
+ *       500:
+ *         description: Error del servidor
  */
 router.patch('/:id', paisController.patchPais)
 

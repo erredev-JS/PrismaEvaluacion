@@ -75,10 +75,18 @@ router.use((req, res, next) => {
  *                 type: string
  *             required:
  *               - nombre
- *               - provinciaId
+ *               - provincia_id
+ *           example:
+ *             nombre: "Gutierres"
+ *             provincia_id: 1
+ *             activo: true
  *     responses:
  *       201:
  *         description: Localidad creada
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error del servidor
  */
 router.post('/', localityController.createLocality)
 
@@ -107,11 +115,19 @@ router.post('/', localityController.createLocality)
  *             properties:
  *               nombre:
  *                 type: string
- *               provinciaId:
+ *               provincia_id:
  *                 type: string
+ *           example:
+ *             nombre: "Las Heras"
+ *             provincia_id: 1
+ *             activo: true
  *     responses:
  *       200:
  *         description: Localidad actualizada
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error del servidor
  */
 router.put('/:id', localityController.updateLocality)
 
@@ -140,9 +156,15 @@ router.put('/:id', localityController.updateLocality)
  *             properties:
  *               activo:
  *                 type: boolean
+ *           example:
+ *             activo: true
  *     responses:
  *       200:
  *         description: Estado actualizado
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error del servidor
  */
 router.patch('/:id', localityController.patchLocality)
 

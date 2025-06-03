@@ -43,7 +43,7 @@ export const getProvinceById = async (req : Request, res : Response) => {
 export const createProvince = async( req : Request, res : Response) => {
     const {nombre, pais_id, activo} = req.body
 
-    if (!nombre || !pais_id || !activo){
+    if (!nombre || !pais_id){
         res.status(400).json({error : 'Faltan atributos en el body'})
         return
     }
@@ -68,11 +68,7 @@ export const updateProvince = async (req: Request, res: Response) => {
     const id = Number(req.params.id); // Convertir a BigInt si es necesario
     const { nombre, activo, localidad, pais } = req.body;
 
-    // Validar que los campos requeridos están presentes
-    if (!nombre || !activo || !localidad || !pais) {
-        res.status(400).json({ error: "Faltan atributos necesarios en el body" });
-        return;
-    }
+
 
     try {
         
