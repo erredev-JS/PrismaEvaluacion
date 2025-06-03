@@ -150,7 +150,7 @@ export const updateBill = async (req: Request, res:Response) => {
             res.status(400).json({error:"Error al crear la factura"})
             return
         }else{
-            res.status(201).json(utils.convertBigIntFields(utils.convertDatesToISOString(updatedBill)))
+            res.status(200).json(utils.convertBigIntFields(utils.convertDatesToISOString(updatedBill)))
             return
         }
 

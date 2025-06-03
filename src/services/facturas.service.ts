@@ -44,7 +44,11 @@ export const getAllBills = () => prisma.factura.findMany({
 
 export const getBillById = (id: number) => prisma.factura.findUnique({where: {id},
                     include:{
-                        detalle_factura:true
+                        detalle_factura:{
+                            include:{
+                                productos: true
+                            }
+                        }
                     }})
 
 export const updateBill = (

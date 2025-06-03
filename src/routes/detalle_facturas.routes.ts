@@ -97,6 +97,14 @@ router.use((req, res, next) => {
  *                 type: integer
  *               activo:
  *                 type: boolean
+ *           example:
+ *             monto: 16000
+ *             cantidad: 2
+ *             subtotal: 16000
+ *             precio_unitario: 8000
+ *             factura_id: 2
+ *             producto_id: 1
+ *             activo: true
  *     responses:
  *       201:
  *         description: Detalle de factura creado exitosamente
@@ -146,8 +154,16 @@ router.post('/', detalleFacturasController.postDetalleFactura)
  *                 type: integer
  *               activo:
  *                 type: boolean
+ *           example:
+ *             monto: 16000
+ *             cantidad: 2
+ *             subtotal: 16000
+ *             precio_unitario: 8000
+ *             factura_id: 2
+ *             producto_id: 1
+ *             activo: true
  *     responses:
- *       201:
+ *       200:
  *         description: Detalle de factura actualizado exitosamente
  *       404:
  *         description: Detalle de factura no encontrado
@@ -183,6 +199,8 @@ router.put("/:id", detalleFacturasController.updateDetalleFactura)
  *             properties:
  *               activo:
  *                 type: boolean
+ *           example:
+ *             activo: true
  *     responses:
  *       200:
  *         description: Estado actualizado

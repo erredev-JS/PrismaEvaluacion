@@ -69,16 +69,66 @@ router.use((req, res, next) => {
  *           schema:
  *             type: object
  *             properties:
- *               clienteId:
- *                 type: string
- *               total:
- *                 type: number
- *               fecha:
+ *               fecha_compra:
  *                 type: string
  *                 format: date
+ *               total:
+ *                 type: number
+ *               usuario_id:
+ *                 type: integer
+ *               activo:
+ *                 type: boolean
+ *               direccion_comprador:
+ *                 type: string
+ *               dni_comprador:
+ *                 type: string
+ *               nombre_comprador:
+ *                 type: string
+ *               detalle_factura:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     monto:
+ *                       type: number
+ *                     cantidad:
+ *                       type: integer
+ *                     subtotal:
+ *                       type: number
+ *                     precio_unitario:
+ *                       type: number
+ *                     producto_id:
+ *                       type: integer
+ *                     activo:
+ *                       type: boolean
+ *           example:
+ *             fecha_compra: "2025-06-03T00:00:00Z"
+ *             total: 18000
+ *             usuario_id: 1
+ *             activo: true
+ *             direccion_comprador: "Calle Falsa 123"
+ *             dni_comprador: "12345678"
+ *             nombre_comprador: "Juan Pérez"
+ *             detalle_factura:
+ *               - monto: 10000
+ *                 cantidad: 1
+ *                 subtotal: 10000
+ *                 precio_unitario: 10000
+ *                 producto_id: 2
+ *                 activo: true
+ *               - monto: 8000
+ *                 cantidad: 1
+ *                 subtotal: 8000
+ *                 precio_unitario: 8000
+ *                 producto_id: 2
+ *                 activo: true
  *     responses:
  *       201:
- *         description: Factura creada
+ *         description: Factura creada exitosamente
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error del servidor
  */
 router.post('/', facturasController.postBill)
 
@@ -95,7 +145,7 @@ router.post('/', facturasController.postBill)
  *         name: id
  *         required: true
  *         schema:
- *           type: string
+ *           type: integer
  *         description: ID de la factura
  *     requestBody:
  *       description: Datos para actualizar la factura
@@ -105,14 +155,53 @@ router.post('/', facturasController.postBill)
  *           schema:
  *             type: object
  *             properties:
+ *               fecha_compra:
+ *                 type: string
+ *                 format: date-time
  *               total:
  *                 type: number
- *               fecha:
+ *               usuario_id:
+ *                 type: integer
+ *               activo:
+ *                 type: boolean
+ *               direccion_comprador:
  *                 type: string
- *                 format: date
+ *               dni_comprador:
+ *                 type: string
+ *               nombre_comprador:
+ *                 type: string
+ *               detalle_factura:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     monto:
+ *                       type: number
+ *                     cantidad:
+ *                       type: integer
+ *                     subtotal:
+ *                       type: number
+ *                     precio_unitario:
+ *                       type: number
+ *                     producto_id:
+ *                       type: integer
+ *                     activo:
+ *                       type: boolean
+ *           example:
+ *             fecha_compra: "2025-06-03T14:45:00Z"
+ *             total: 16000
+ *             usuario_id: 3
+ *             activo: true
+ *             direccion_comprador: "Av. San Martín 1234"
+ *             dni_comprador: "30123456"
+ *             nombre_comprador: "Carlos Pérez"
  *     responses:
  *       200:
  *         description: Factura actualizada
+ *       404:
+ *         description: Factura no encontrada
+ *       500:
+ *         description: Error del servidor
  */
 router.put('/:id', facturasController.updateBill)
 
@@ -141,6 +230,8 @@ router.put('/:id', facturasController.updateBill)
  *             properties:
  *               activo:
  *                 type: boolean
+ *           example:
+ *             activo: true
  *     responses:
  *       200:
  *         description: Estado actualizado
