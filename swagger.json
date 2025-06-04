@@ -2766,6 +2766,11 @@
                     "type": "string"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Ana López",
+                "email": "ana.lopez@correo.com",
+                "password": "MiPasswordSeguro123"
               }
             }
           }
@@ -2991,10 +2996,10 @@
                   "activo": {
                     "type": "boolean"
                   }
-                },
-                "example": {
-                  "activo": false
                 }
+              },
+              "example": {
+                "activo": false
               }
             }
           }
