@@ -33,7 +33,8 @@ export const postDescuento = async (req: Request, res: Response) => {
       return
     }
 
-    res.status(201).json(utils.convertBigIntFields(created))
+    res.status(201).json(res.status(200).json(utils.convertDatesToISOString(utils.convertBigIntFields(created)))
+)
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(500).json({ error: err.message })
@@ -46,7 +47,8 @@ export const postDescuento = async (req: Request, res: Response) => {
 export const getAllDescuentos = async (_req: Request, res: Response) => {
   try {
     const data = await descuentosServices.getAllDescuentos()
-    res.status(200).json(utils.convertBigIntFields(data))
+    res.status(200).json(res.status(200).json(utils.convertDatesToISOString(utils.convertBigIntFields(data)))
+)
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(500).json({ error: err.message })
@@ -72,7 +74,7 @@ export const getDescuentoById = async (req: Request, res: Response) => {
       return
     }
 
-    res.status(200).json(utils.convertBigIntFields(data))
+    res.status(200).json(utils.convertDatesToISOString(utils.convertBigIntFields(data)))
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(500).json({ error: err.message })
@@ -122,7 +124,7 @@ export const updateDescuento = async (req: Request, res: Response) => {
       return
     }
 
-    res.status(200).json(utils.convertBigIntFields(updated))
+    res.status(200).json(utils.convertDatesToISOString(utils.convertBigIntFields(updated)))
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(500).json({ error: err.message })
@@ -156,7 +158,7 @@ export const patchDescuento = async (req: Request, res: Response) => {
       return
     }
 
-    res.status(200).json(utils.convertBigIntFields(updated))
+    res.status(200).json(utils.convertDatesToISOString(utils.convertBigIntFields(updated)))
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(500).json({ error: err.message })

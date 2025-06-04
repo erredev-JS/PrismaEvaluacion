@@ -88,19 +88,25 @@ router.use((req, res, next) => {
  *                 format: date
  *               tiempo_desde:
  *                 type: string
- *                 example: "08:00"
  *               tiempo_hasta:
  *                 type: string
- *                 example: "18:00"
  *               promocion_precio:
  *                 type: number
  *               activo:
  *                 type: boolean
+ *           example:
+ *             nombre: Descuento verano
+ *             descripcion: Promoción para temporada de verano
+ *             fecha_desde: "2025-12-01"
+ *             fecha_hasta: "2026-02-28"
+ *             tiempo_desde: "09:00"
+ *             tiempo_hasta: "21:00"
+ *             promocion_precio: 20
+ *             activo: true
  *     responses:
  *       201:
  *         description: Descuento creado
  */
-
 router.post('/', discountController.postDescuento)
 
 /**
@@ -144,11 +150,19 @@ router.post('/', discountController.postDescuento)
  *                 type: number
  *               activo:
  *                 type: boolean
+ *           example:
+ *             nombre: Descuento otoño
+ *             descripcion: Promoción para temporada baja
+ *             fecha_desde: "2025-03-01"
+ *             fecha_hasta: "2025-05-31"
+ *             tiempo_desde: "10:00"
+ *             tiempo_hasta: "20:00"
+ *             promocion_precio: 15
+ *             activo: false
  *     responses:
  *       200:
  *         description: Descuento actualizado
  */
-
 router.put('/:id', discountController.updateDescuento)
 
 /**
@@ -176,6 +190,8 @@ router.put('/:id', discountController.updateDescuento)
  *             properties:
  *               activo:
  *                 type: boolean
+ *           example:
+ *             activo: true
  *     responses:
  *       200:
  *         description: Estado del descuento actualizado

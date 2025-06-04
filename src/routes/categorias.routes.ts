@@ -79,6 +79,9 @@ router.use((req, res, next) => {
  *                 type: string
  *               activo:
  *                 type: boolean
+ *           example:
+ *             nombre: Camisas
+ *             activo: true
  *     responses:
  *       201:
  *         description: Categoría creada
@@ -117,6 +120,9 @@ router.post('/', categoriasController.postCategory)
  *                 type: string
  *               activo:
  *                 type: boolean
+ *           example:
+ *             nombre: Pantalones
+ *             activo: false
  *     responses:
  *       200:
  *         description: Categoría actualizada
@@ -154,6 +160,8 @@ router.put("/:id", categoriasController.updateCategory)
  *             properties:
  *               activo:
  *                 type: boolean
+ *           example:
+ *             activo: true
  *     responses:
  *       200:
  *         description: Estado actualizado
