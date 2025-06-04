@@ -62,7 +62,7 @@ export const userValidate = async (nombre: string, contrasenia: string) => {
 
         const token = await authUtils.generateToken({nombre})
 
-        return {user, token}
+        return {token}
 
 
 
