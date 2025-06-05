@@ -1,50 +1,51 @@
-import express from 'express'
-import * as detalleFacturasController from '../controllers/detalle_facturas.controller'
+import {Router} from "express"
 
-// Swagger tags para DetallesFacturas
+import * as detalleController from '../controllers/detalle.controller'
+
+// Swagger tags para Detalles
 /**
  * @swagger
  * tags:
- *   name: DetalleFactura
+ *   name: Detalle
  *   description: Gestión de detalle de las facturas de la tienda de ropa
  */
 
-const router = express.Router()
+const router = Router()
 
 // Get's
 
 /**
  * @swagger
- * /detalle-factura:
+ * /detalle:
  *   get:
  *     summary: Obtiene todos los detalles de factura
- *     tags: [DetalleFactura]
+ *     tags: [Detalle]
  *     responses:
  *       200:
  *         description: Lista de detalles
  */
-router.get('/', detalleFacturasController.getAllDetalleFacturas)
+router.get('/', detalleController.getAllDetalles)
 
 /**
  * @swagger
- * /detalle-factura/{id}:
+ * /detalle/{id}:
  *   get:
- *     summary: Obtiene detalles de factura por ID
- *     tags: [DetalleFactura]
+ *     summary: Obtiene detalle por ID
+ *     tags: [Detalle]
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
- *           type: string
- *         description: ID de DetalleFactura
+ *           type: integer
+ *         description: ID de Detalle
  *     responses:
  *       200:
  *         description: DetalleFactura encontrada
  *       404:
  *         description: DetalleFactura no encontrada
  */
-router.get("/:id", detalleFacturasController.getDetalleFacturaById)
+router.get("/:id", detalleController.getDetalleById)
 
 // Requiere auth en los métodos después de esta función
 
@@ -62,67 +63,59 @@ router.use((req, res, next) => {
 
 /**
  * @swagger
- * /detalle-factura:
+ * /detalle:
  *   post:
- *     summary: Crea DetalleFactura (requiere autenticación)
- *     tags: [DetalleFactura]
+ *     summary: Crea un nuevo Detalle (requiere autenticación)
+ *     tags: [Detalle]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
- *       description: Datos para crear DetalleFactura
+ *       description: Datos para crear Detalle
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             required:
- *               - monto
- *               - cantidad
- *               - subtotal
- *               - precio_unitario
- *               - factura_id
- *               - producto_id
+ *               - color_id
+ *               - talla_id
+ *               - stock
+ *               - precio_id
  *             properties:
- *               monto:
- *                 type: number
- *               cantidad:
+ *               color_id:
  *                 type: integer
- *               subtotal:
- *                 type: number
- *               precio_unitario:
- *                 type: number
- *               factura_id:
+ *               talla_id:
  *                 type: integer
- *               producto_id:
+ *               stock:
+ *                 type: integer
+ *               precio_id:
  *                 type: integer
  *               activo:
  *                 type: boolean
  *           example:
- *             monto: 16000
- *             cantidad: 2
- *             subtotal: 16000
- *             precio_unitario: 8000
- *             factura_id: 2
- *             producto_id: 1
+ *             color_id: 1
+ *             talla_id: 2
+ *             stock: 100
+ *             precio_id: 5
  *             activo: true
  *     responses:
  *       201:
- *         description: Detalle de factura creado exitosamente
+ *         description: Detalle creado exitosamente
  *       400:
  *         description: Datos faltantes o inválidos
  *       500:
  *         description: Error del servidor
  */
-router.post('/', detalleFacturasController.postDetalleFactura)
+router.post('/', detalleController.postDetalle)
 
 // Update
 
 /**
  * @swagger
- * /detalle-factura/{id}:
+ * /detalle/{id}:
  *   put:
- *     summary: Actualiza un detalle de factura por ID (requiere autenticación)
- *     tags: [DetalleFactura]
+ *     summary: Actualiza un detalle por ID (requiere autenticación)
+ *     tags: [Detalle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -131,36 +124,30 @@ router.post('/', detalleFacturasController.postDetalleFactura)
  *         required: true
  *         schema:
  *           type: integer
- *         description: ID del detalle de factura a actualizar
+ *         description: ID del detalle a actualizar
  *     requestBody:
- *       description: Datos para actualizar el detalle de factura (pueden enviarse campos parciales)
+ *       description: Datos para actualizar el detalle (pueden enviarse campos parciales)
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               monto:
- *                 type: number
- *               cantidad:
+ *               color_id:
  *                 type: integer
- *               subtotal:
- *                 type: number
- *               precio_unitario:
- *                 type: number
- *               factura_id:
+ *               talla_id:
  *                 type: integer
- *               producto_id:
+ *               stock:
+ *                 type: integer
+ *               precio_id:
  *                 type: integer
  *               activo:
  *                 type: boolean
  *           example:
- *             monto: 16000
- *             cantidad: 2
- *             subtotal: 16000
- *             precio_unitario: 8000
- *             factura_id: 2
- *             producto_id: 1
+ *             color_id: 2
+ *             talla_id: 3
+ *             stock: 50
+ *             precio_id: 4
  *             activo: true
  *     responses:
  *       200:
@@ -170,16 +157,16 @@ router.post('/', detalleFacturasController.postDetalleFactura)
  *       500:
  *         description: Error del servidor
  */
-router.put("/:id", detalleFacturasController.updateDetalleFactura)
+router.put("/:id", detalleController.updateDetalle)
 
 // Disable / Enable
 
 /**
  * @swagger
- * /detalle-factura/{id}:
+ * /detalle/{id}:
  *   patch:
  *     summary: Activa o desactiva un DetalleFactura(requiere autenticación)
- *     tags: [DetalleFactura]
+ *     tags: [Detalle]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -187,8 +174,8 @@ router.put("/:id", detalleFacturasController.updateDetalleFactura)
  *         name: id
  *         required: true
  *         schema:
- *           type: string
- *         description: ID de DetalleFactura
+ *           type: integer
+ *         description: ID de Detalle
  *     requestBody:
  *       description: Estado activo o inactivo
  *       required: true
@@ -205,6 +192,6 @@ router.put("/:id", detalleFacturasController.updateDetalleFactura)
  *       200:
  *         description: Estado actualizado
  */
-router.patch('/:id', detalleFacturasController.patchDetalleFactura)
+router.patch('/:id', detalleController.patchDetalle)
 
 export default router

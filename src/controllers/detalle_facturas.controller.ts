@@ -115,11 +115,11 @@ export const updateDetalleFactura = async (req:Request, res:Response) => {
         const detalleFactura = await detalleFacturasServices.getDetalleFacturaById(id)
         if(!detalleFactura){
             res.status(404).json({ error: `Error al encontrar la Detalle Factura con id: ${id}` })
-      return
+            return
         }else{
             const updatedDetalleFactura = await detalleFacturasServices.updateDetalleFactura(body, id)
             if(!updatedDetalleFactura){
-                res.status(200).json({error: "Error al actualizar Detalle Factura"})
+                res.status(400).json({error: "Error al actualizar Detalle Factura"})
                 return
             }else{
                 res.status(201).json(utils.convertBigIntFields(updatedDetalleFactura))
@@ -150,6 +150,7 @@ export const patchDetalleFactura = async (req:Request, res:Response) => {
             const updatedDetalleFactura = await detalleFacturasServices.patchDetalleFactura(activo, id)
             if(!updatedDetalleFactura){
                 res.status(404).json({error: "error al patchear el DetalleFactura"})
+                return
             }else{
                 res.status(200).json(utils.convertBigIntFields(updatedDetalleFactura))
                 return

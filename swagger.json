@@ -886,6 +886,223 @@
         }
       }
     },
+    "/detalle": {
+      "get": {
+        "summary": "Obtiene todos los detalles de factura",
+        "tags": [
+          "Detalle"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de detalles"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea un nuevo Detalle (requiere autenticación)",
+        "tags": [
+          "Detalle"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para crear Detalle",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "color_id",
+                  "talla_id",
+                  "stock",
+                  "precio_id"
+                ],
+                "properties": {
+                  "color_id": {
+                    "type": "integer"
+                  },
+                  "talla_id": {
+                    "type": "integer"
+                  },
+                  "stock": {
+                    "type": "integer"
+                  },
+                  "precio_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "color_id": 1,
+                "talla_id": 2,
+                "stock": 100,
+                "precio_id": 5,
+                "activo": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Detalle creado exitosamente"
+          },
+          "400": {
+            "description": "Datos faltantes o inválidos"
+          },
+          "500": {
+            "description": "Error del servidor"
+          }
+        }
+      }
+    },
+    "/detalle/{id}": {
+      "get": {
+        "summary": "Obtiene detalle por ID",
+        "tags": [
+          "Detalle"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID de Detalle"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DetalleFactura encontrada"
+          },
+          "404": {
+            "description": "DetalleFactura no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza un detalle por ID (requiere autenticación)",
+        "tags": [
+          "Detalle"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del detalle a actualizar"
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar el detalle (pueden enviarse campos parciales)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "color_id": {
+                    "type": "integer"
+                  },
+                  "talla_id": {
+                    "type": "integer"
+                  },
+                  "stock": {
+                    "type": "integer"
+                  },
+                  "precio_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "color_id": 2,
+                "talla_id": 3,
+                "stock": 50,
+                "precio_id": 4,
+                "activo": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detalle de factura actualizado exitosamente"
+          },
+          "404": {
+            "description": "Detalle de factura no encontrado"
+          },
+          "500": {
+            "description": "Error del servidor"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva un DetalleFactura(requiere autenticación)",
+        "tags": [
+          "Detalle"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID de Detalle"
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "activo": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          }
+        }
+      }
+    },
     "/direccion": {
       "get": {
         "summary": "Obtiene todas las direcciones",
@@ -2194,17 +2411,11 @@
                   "categoria_id": {
                     "type": "integer"
                   },
-                  "precio_id": {
-                    "type": "integer"
-                  },
                   "imagen_id": {
                     "type": "integer"
                   },
                   "descripcion": {
                     "type": "string"
-                  },
-                  "stock": {
-                    "type": "integer"
                   },
                   "activo": {
                     "type": "boolean"
@@ -2215,10 +2426,8 @@
                   "tipo_producto",
                   "sexo",
                   "categoria_id",
-                  "precio_id",
                   "imagen_id",
                   "descripcion",
-                  "stock",
                   "activo"
                 ]
               }
@@ -2296,17 +2505,11 @@
                   "categoria_id": {
                     "type": "integer"
                   },
-                  "precio_id": {
-                    "type": "integer"
-                  },
                   "imagen_id": {
                     "type": "integer"
                   },
                   "descripcion": {
                     "type": "string"
-                  },
-                  "stock": {
-                    "type": "integer"
                   },
                   "activo": {
                     "type": "boolean"
@@ -2317,10 +2520,8 @@
                   "tipo_producto",
                   "sexo",
                   "categoria_id",
-                  "precio_id",
                   "imagen_id",
                   "descripcion",
-                  "stock",
                   "activo"
                 ]
               }
@@ -2364,6 +2565,9 @@
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "activo": true
               }
             }
           }
@@ -3075,6 +3279,10 @@
     },
     {
       "name": "DetalleFactura",
+      "description": "Gestión de detalle de las facturas de la tienda de ropa"
+    },
+    {
+      "name": "Detalle",
       "description": "Gestión de detalle de las facturas de la tienda de ropa"
     },
     {

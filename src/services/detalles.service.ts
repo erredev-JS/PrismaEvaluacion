@@ -9,7 +9,6 @@ export const postDetails = async (data : {
 
     color_id : number,
     talla_id : number,
-    estado: boolean,
     stock : number,
     precio_id: number,
     activo: boolean

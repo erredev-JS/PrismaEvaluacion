@@ -14,6 +14,7 @@ import usuariosRoutes from './routes/usuarios.routes'
 import descuentosRoutes from './routes/descuentos.routes'
 import facturasRoutes from './routes/facturas.routes'
 import detalleFacturasRoutes from './routes/detalle_facturas.routes'
+import detallesRoutes from './routes/detalle.router'
 import { setupSwagger } from './swagger'
 
 const app = express()
@@ -37,6 +38,7 @@ app.use('/colores', coloresRoutes)
 app.use('/usuarios', usuariosRoutes)
 app.use('/facturas', facturasRoutes)
 app.use('/detalle-facturas', detalleFacturasRoutes)
+app.use('/detalle', detallesRoutes)
 
 
 app.listen(PORT, () => {
