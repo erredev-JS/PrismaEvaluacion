@@ -57,6 +57,10 @@ router.post('/login', usuariosController.login)
  *                 type: string
  *               password:
  *                 type: string
+ *           example:
+ *             nombre: "Ana López"
+ *             email: "ana.lopez@correo.com"
+ *             password: "MiPasswordSeguro123"
  *     responses:
  *       201:
  *         description: Usuario creado exitosamente
@@ -228,8 +232,8 @@ router.put('/:id', usuariosController.updateUser)
  *             properties:
  *               activo:
  *                 type: boolean
- *             example:
- *               activo: false
+ *           example:
+ *             activo: false
  *     responses:
  *       200:
  *         description: Estado del usuario modificado

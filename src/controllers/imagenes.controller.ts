@@ -14,7 +14,7 @@ export const postImage = async(req: Request, res: Response) => {
 
     } = req.body
 
-    if(!url || imagen_id == undefined || activo == undefined){
+    if(!url){
 
         res.status(400).json({ error: 'Faltan atributos obligatorios' })
         return
@@ -23,7 +23,6 @@ export const postImage = async(req: Request, res: Response) => {
 
     const body = {
         url,
-        imagen_id,
         activo
     }
 
@@ -138,14 +137,9 @@ export const updateImage = async (req: Request, res: Response) => {
         activo
     } = req.body
 
-    if(!url || imagen_id == undefined || activo == undefined){
-        res.status(400).json({ error: 'Faltan atributos obligatorios' })
-        return
-    }
-
+    
     const body = {
         url,
-        imagen_id,
         activo
     }
 

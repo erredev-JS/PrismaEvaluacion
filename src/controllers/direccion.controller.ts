@@ -50,7 +50,7 @@ export const createAdress = async (req : Request, res : Response) =>{
 
     const {codigo_postal, numero, calle, user_id, localidad_id, activo} = req.body
 
-    if (!codigo_postal || !numero || !calle || !user_id || !localidad_id || !activo){
+    if (!codigo_postal || !numero || !calle || !user_id || !localidad_id){
         res.status(400).json({error : 'Faltan atributos en el body'})
         return
     }
@@ -74,12 +74,7 @@ export const createAdress = async (req : Request, res : Response) =>{
 
 export const updateAdress = async(req : Request, res : Response) => {
     const id = Number(req.params.id)
-    const { codigo_postal, numero, calle, user_id, localidad_id, activo} = req.body 
-
-    if (!codigo_postal || !numero || !calle || !user_id || !localidad_id || typeof activo === 'undefined'){
-        res.status(400).json({error : 'Faltan atributos en el body'})
-        return
-    }
+    const { codigo_postal, numero, calle, user_id, localidad_id, activo } = req.body
 
     try {
         
@@ -91,7 +86,13 @@ export const updateAdress = async(req : Request, res : Response) => {
             const updatedAdress = await addresService.updateAdress({
                 codigo_postal, numero, calle, user_id, localidad_id, activo
             }, id)
-            res.status(200).json(utils.convertBigIntFields(updateAdress))
+
+            if(!updatedAdress){
+                res.status(400).json({error : 'Error al obtener la direccion'})
+                return
+            }
+
+            res.status(200).json(utils.convertBigIntFields(updatedAdress))
             return
         }
 
@@ -121,7 +122,7 @@ export const patchAdress = async (req : Request, res : Response) => {
                 res.status(400).json({error : 'No se pudo patchear la direccion'})
                 return
             } else {
-                res.status(200).json(utils.convertBigIntFields(updateAdress))
+                res.status(200).json(utils.convertBigIntFields(updatedAdress))
                 return
             }
         }

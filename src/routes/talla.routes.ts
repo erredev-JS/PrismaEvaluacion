@@ -70,9 +70,13 @@ router.use((req, res, next) => {
  *                 type: string
  *             required:
  *               - nombre
+ *           example:
+ *             talla: XXL
  *     responses:
  *       201:
- *         description: Talla creada
+ *         description: Talle creado
+ *       500:
+ *         description: Error al crear el talle
  */
 router.post('/', sizeController.createSize)
 
@@ -99,9 +103,18 @@ router.post('/', sizeController.createSize)
  *             properties:
  *               nombre:
  *                 type: string
+ *               activo:
+ *                 type: boolean
+ *           example:
+ *             talla: XL
+ *             activo: true
  *     responses:
  *       200:
- *         description: Talla actualizada
+ *         description: Talle actualizado
+ *       404:
+ *         description: Talle no encontrado
+ *       500:
+ *         description: Error al actualizar el talle
  */
 router.put('/:id', sizeController.updateSize)
 
@@ -131,6 +144,10 @@ router.put('/:id', sizeController.updateSize)
  *     responses:
  *       200:
  *         description: Estado actualizado
+ *       404:
+ *         description: Talle no encontrado
+ *       500: 
+ *         description: Error al patchear el talle
  */
 router.patch('/:id', sizeController.patchSize)
 

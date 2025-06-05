@@ -43,7 +43,7 @@ export const getSizesById = async(req : Request, res : Response) =>{
 export const createSize = async(req : Request, res : Response) =>{
     const {talla, activo} = req.body
 
-    if (!talla || !activo) {
+    if (!talla) {
         res.status(400).json({error : 'Faltan atributos en el body'})
     }
     
@@ -76,7 +76,7 @@ export const updateSize = async(req: Request, res : Response) => {
                 res.status(400).json({error : 'No se pudo actualizar el talle'})
                 return
             } else {
-                res.status(200).json(utils.convertBigIntFields(updateSize))
+                res.status(200).json(utils.convertBigIntFields(updatedSize))
                 return
             }
         }
@@ -112,7 +112,7 @@ export const patchSize = async(req :Request, res : Response) => {
                 res.status(400).json({error : 'No se pudo actualizar el talle'})
                 return
             } else {
-                res.status(200).json(utils.convertBigIntFields(updateSize))
+                res.status(200).json(utils.convertBigIntFields(updatedSize))
                 return
             }
         }

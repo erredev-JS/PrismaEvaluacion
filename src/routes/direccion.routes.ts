@@ -71,15 +71,37 @@ router.use((req, res, next) => {
  *             required:
  *               - calle
  *               - numero
+ *               - codigo_postal
+ *               - user_id
+ *               - localidad_id
+ *               
  *             properties:
+ *               codigo_postal:
+ *                 type: number
+ *               numero:
+ *                 type: number
  *               calle:
  *                 type: string
- *               numero:
- *                 type: string
- *              
+ *               user_id:
+ *                 type: number
+ *               localidad_id:
+ *                 type: number
+ *               
+ *             example:
+ *               codigo_postal: 5515
+ *               numero: 290
+ *               calle: "Capetillo"
+ *               user_id: 2
+ *               localidad_id: 4
+ *               activo: true
  *     responses:
  *       201:
  *         description: Dirección creada
+ *       400: 
+ *          description: Error en los datos enviados
+ *       500: 
+ *          description: Error en el servidor
+ *       
  */
 router.post('/', addressController.createAdress)
 
@@ -105,14 +127,37 @@ router.post('/', addressController.createAdress)
  *         application/json:
  *           schema:
  *             type: object
+ * 
  *             properties:
+ *               codigo_postal:
+ *                 type: number
+ *               numero:
+ *                 type: number
  *               calle:
  *                 type: string
- *               numero:
- *                 type: string
+ *               user_id:
+ *                 type: number
+ *               localidad_id:
+ *                 type: number
+ *               activo:
+ *                 type: boolean
+ * 
+ *             example:
+ *               codigo_postal: 5500
+ *               numero: 123
+ *               calle: "Ozamis"
+ *               user_id: 1
+ *               localidad_id: 5
+ 
  *     responses:
  *       200:
  *         description: Dirección actualizada
+ *       404:
+ *         description: No se encontró la dirección
+ *       400:
+ *         description: Error en los datos enviados
+ *       500:
+ *         description: Error en el servidor
  */
 router.put('/:id', addressController.updateAdress)
 
@@ -141,9 +186,19 @@ router.put('/:id', addressController.updateAdress)
  *             properties:
  *               activo:
  *                 type: boolean
+ *
+ *             example: 
+ *               activo: false 
+ * 
  *     responses:
  *       200:
  *         description: Estado actualizado
+ *       404:
+ *         description: No se encontro la direccion
+ *       400:
+ *         description: No se pudo patchear la direccion
+ *       500:
+ *         description: Error en el servidor 
  */
 router.patch('/:id', addressController.patchAdress)
 

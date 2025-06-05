@@ -33,28 +33,38 @@
             "bearerAuth": []
           }
         ],
-        "responses": {
-          "201": {
-            "description": "Categoría creada"
-          }
-        },
         "requestBody": {
-          "description": "Datos para crear una categoría",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
-                  "nombre"
+                  "nombre",
+                  "activo"
                 ],
                 "properties": {
                   "nombre": {
                     "type": "string"
+                  },
+                  "activo": {
+                    "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Camisas",
+                "activo": true
               }
             }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Categoría creada"
+          },
+          "400": {
+            "description": "Faltan atributos obligatorios o error de validación"
           }
         }
       }
@@ -65,6 +75,17 @@
         "tags": [
           "Categorias"
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID de la categoría"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Categoría encontrada"
@@ -72,18 +93,7 @@
           "404": {
             "description": "Categoría no encontrada"
           }
-        },
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "ID de la categoría"
-          }
-        ]
+        }
       },
       "put": {
         "summary": "Actualiza una categoría por ID (requiere autenticación)",
@@ -95,36 +105,52 @@
             "bearerAuth": []
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Categoría actualizada"
-          }
-        },
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "ID de la categoría a actualizar"
+            "description": "ID de la categoría"
           }
         ],
         "requestBody": {
-          "description": "Datos para actualizar la categoría",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "nombre",
+                  "activo"
+                ],
                 "properties": {
                   "nombre": {
                     "type": "string"
+                  },
+                  "activo": {
+                    "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Pantalones",
+                "activo": false
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Categoría actualizada"
+          },
+          "400": {
+            "description": "Error al actualizar"
+          },
+          "404": {
+            "description": "Categoría no encontrada"
           }
         }
       },
@@ -138,36 +164,47 @@
             "bearerAuth": []
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Estado actualizado"
-          }
-        },
         "parameters": [
           {
             "in": "path",
             "name": "id",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "ID de la categoría"
           }
         ],
         "requestBody": {
-          "description": "Estado activo o inactivo",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "activo"
+                ],
                 "properties": {
                   "activo": {
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "activo": true
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
+          },
+          "400": {
+            "description": "Error al patchear"
+          },
+          "404": {
+            "description": "Categoría no encontrada"
           }
         }
       }
@@ -194,9 +231,46 @@
             "bearerAuth": []
           }
         ],
+        "requestBody": {
+          "description": "Datos para crear DetalleFactura",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "valor"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "valor": {
+                    "type": "string"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "nombre": "negro",
+                "valor": "#000000",
+                "activo": true
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Color creado"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -226,9 +300,60 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del color a actualizar"
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar el color",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "nombre",
+                  "valor"
+                ],
+                "properties": {
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "valor": {
+                    "type": "string"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "nombre": "gris oscuro",
+                "valor": "#333333",
+                "activo": false
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Color actualizado"
+            "description": "Color actualizado correctamente"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "404": {
+            "description": "Color no encontrado"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       },
@@ -242,9 +367,51 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del color"
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo del color",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "activo"
+                ],
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "activo": true
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Estado actualizado"
+            "description": "Estado del color actualizado correctamente"
+          },
+          "400": {
+            "description": "Datos inválidos enviados"
+          },
+          "404": {
+            "description": "Color no encontrado"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -280,23 +447,50 @@
                 "type": "object",
                 "required": [
                   "nombre",
-                  "porcentaje",
-                  "usuario_id"
+                  "fecha_desde",
+                  "fecha_hasta",
+                  "promocion_precio",
+                  "tiempo_desde",
+                  "tiempo_hasta"
                 ],
                 "properties": {
                   "nombre": {
                     "type": "string"
                   },
-                  "porcentaje": {
-                    "type": "number"
+                  "descripcion": {
+                    "type": "string"
                   },
-                  "usuario_id": {
-                    "type": "integer"
+                  "fecha_desde": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "fecha_hasta": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "tiempo_desde": {
+                    "type": "string"
+                  },
+                  "tiempo_hasta": {
+                    "type": "string"
+                  },
+                  "promocion_precio": {
+                    "type": "number"
                   },
                   "activo": {
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Descuento verano",
+                "descripcion": "Promoción para temporada de verano",
+                "fecha_desde": "2025-12-01",
+                "fecha_hasta": "2026-02-28",
+                "tiempo_desde": "09:00",
+                "tiempo_hasta": "21:00",
+                "promocion_precio": 20,
+                "activo": true
               }
             }
           }
@@ -350,7 +544,7 @@
             "name": "id",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "ID del descuento"
           }
@@ -366,16 +560,40 @@
                   "nombre": {
                     "type": "string"
                   },
-                  "porcentaje": {
-                    "type": "number"
+                  "descripcion": {
+                    "type": "string"
                   },
-                  "usuario_id": {
-                    "type": "integer"
+                  "fecha_desde": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "fecha_hasta": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "tiempo_desde": {
+                    "type": "string"
+                  },
+                  "tiempo_hasta": {
+                    "type": "string"
+                  },
+                  "promocion_precio": {
+                    "type": "number"
                   },
                   "activo": {
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Descuento otoño",
+                "descripcion": "Promoción para temporada baja",
+                "fecha_desde": "2025-03-01",
+                "fecha_hasta": "2025-05-31",
+                "tiempo_desde": "10:00",
+                "tiempo_hasta": "20:00",
+                "promocion_precio": 15,
+                "activo": false
               }
             }
           }
@@ -419,6 +637,9 @@
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "activo": true
               }
             }
           }
@@ -426,6 +647,241 @@
         "responses": {
           "200": {
             "description": "Estado del descuento actualizado"
+          }
+        }
+      }
+    },
+    "/detalle-factura": {
+      "get": {
+        "summary": "Obtiene todos los detalles de factura",
+        "tags": [
+          "DetalleFactura"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de detalles"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crea DetalleFactura (requiere autenticación)",
+        "tags": [
+          "DetalleFactura"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para crear DetalleFactura",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "monto",
+                  "cantidad",
+                  "subtotal",
+                  "precio_unitario",
+                  "factura_id",
+                  "producto_id"
+                ],
+                "properties": {
+                  "monto": {
+                    "type": "number"
+                  },
+                  "cantidad": {
+                    "type": "integer"
+                  },
+                  "subtotal": {
+                    "type": "number"
+                  },
+                  "precio_unitario": {
+                    "type": "number"
+                  },
+                  "factura_id": {
+                    "type": "integer"
+                  },
+                  "producto_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "monto": 16000,
+                "cantidad": 2,
+                "subtotal": 16000,
+                "precio_unitario": 8000,
+                "factura_id": 2,
+                "producto_id": 1,
+                "activo": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Detalle de factura creado exitosamente"
+          },
+          "400": {
+            "description": "Datos faltantes o inválidos"
+          },
+          "500": {
+            "description": "Error del servidor"
+          }
+        }
+      }
+    },
+    "/detalle-factura/{id}": {
+      "get": {
+        "summary": "Obtiene detalles de factura por ID",
+        "tags": [
+          "DetalleFactura"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de DetalleFactura"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DetalleFactura encontrada"
+          },
+          "404": {
+            "description": "DetalleFactura no encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Actualiza un detalle de factura por ID (requiere autenticación)",
+        "tags": [
+          "DetalleFactura"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "ID del detalle de factura a actualizar"
+          }
+        ],
+        "requestBody": {
+          "description": "Datos para actualizar el detalle de factura (pueden enviarse campos parciales)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "monto": {
+                    "type": "number"
+                  },
+                  "cantidad": {
+                    "type": "integer"
+                  },
+                  "subtotal": {
+                    "type": "number"
+                  },
+                  "precio_unitario": {
+                    "type": "number"
+                  },
+                  "factura_id": {
+                    "type": "integer"
+                  },
+                  "producto_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "monto": 16000,
+                "cantidad": 2,
+                "subtotal": 16000,
+                "precio_unitario": 8000,
+                "factura_id": 2,
+                "producto_id": 1,
+                "activo": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Detalle de factura actualizado exitosamente"
+          },
+          "404": {
+            "description": "Detalle de factura no encontrado"
+          },
+          "500": {
+            "description": "Error del servidor"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Activa o desactiva un DetalleFactura(requiere autenticación)",
+        "tags": [
+          "DetalleFactura"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de DetalleFactura"
+          }
+        ],
+        "requestBody": {
+          "description": "Estado activo o inactivo",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "activo": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estado actualizado"
           }
         }
       }
@@ -461,15 +917,35 @@
                 "type": "object",
                 "required": [
                   "calle",
-                  "numero"
+                  "numero",
+                  "codigo_postal",
+                  "user_id",
+                  "localidad_id"
                 ],
                 "properties": {
+                  "codigo_postal": {
+                    "type": "number"
+                  },
+                  "numero": {
+                    "type": "number"
+                  },
                   "calle": {
                     "type": "string"
                   },
-                  "numero": {
-                    "type": "string"
+                  "user_id": {
+                    "type": "number"
+                  },
+                  "localidad_id": {
+                    "type": "number"
                   }
+                },
+                "example": {
+                  "codigo_postal": 5515,
+                  "numero": 290,
+                  "calle": "Capetillo",
+                  "user_id": 2,
+                  "localidad_id": 4,
+                  "activo": true
                 }
               }
             }
@@ -478,6 +954,12 @@
         "responses": {
           "201": {
             "description": "Dirección creada"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error en el servidor"
           }
         }
       }
@@ -537,12 +1019,31 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "codigo_postal": {
+                    "type": "number"
+                  },
+                  "numero": {
+                    "type": "number"
+                  },
                   "calle": {
                     "type": "string"
                   },
-                  "numero": {
-                    "type": "string"
+                  "user_id": {
+                    "type": "number"
+                  },
+                  "localidad_id": {
+                    "type": "number"
+                  },
+                  "activo": {
+                    "type": "boolean"
                   }
+                },
+                "example": {
+                  "codigo_postal": 5500,
+                  "numero": 123,
+                  "calle": "Ozamis",
+                  "user_id": 1,
+                  "localidad_id": 5
                 }
               }
             }
@@ -551,6 +1052,15 @@
         "responses": {
           "200": {
             "description": "Dirección actualizada"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "404": {
+            "description": "No se encontró la dirección"
+          },
+          "500": {
+            "description": "Error en el servidor"
           }
         }
       },
@@ -586,6 +1096,9 @@
                   "activo": {
                     "type": "boolean"
                   }
+                },
+                "example": {
+                  "activo": false
                 }
               }
             }
@@ -594,6 +1107,15 @@
         "responses": {
           "200": {
             "description": "Estado actualizado"
+          },
+          "400": {
+            "description": "No se pudo patchear la direccion"
+          },
+          "404": {
+            "description": "No se encontro la direccion"
+          },
+          "500": {
+            "description": "Error en el servidor"
           }
         }
       }
@@ -628,24 +1150,95 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "clienteId": {
-                    "type": "string"
+                  "fecha_compra": {
+                    "type": "string",
+                    "format": "date"
                   },
                   "total": {
                     "type": "number"
                   },
-                  "fecha": {
-                    "type": "string",
-                    "format": "date"
+                  "usuario_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  },
+                  "direccion_comprador": {
+                    "type": "string"
+                  },
+                  "dni_comprador": {
+                    "type": "string"
+                  },
+                  "nombre_comprador": {
+                    "type": "string"
+                  },
+                  "detalle_factura": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "monto": {
+                          "type": "number"
+                        },
+                        "cantidad": {
+                          "type": "integer"
+                        },
+                        "subtotal": {
+                          "type": "number"
+                        },
+                        "precio_unitario": {
+                          "type": "number"
+                        },
+                        "producto_id": {
+                          "type": "integer"
+                        },
+                        "activo": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
                   }
                 }
+              },
+              "example": {
+                "fecha_compra": "2025-06-03T00:00:00Z",
+                "total": 18000,
+                "usuario_id": 1,
+                "activo": true,
+                "direccion_comprador": "Calle Falsa 123",
+                "dni_comprador": "12345678",
+                "nombre_comprador": "Juan Pérez",
+                "detalle_factura": [
+                  {
+                    "monto": 10000,
+                    "cantidad": 1,
+                    "subtotal": 10000,
+                    "precio_unitario": 10000,
+                    "producto_id": 2,
+                    "activo": true
+                  },
+                  {
+                    "monto": 8000,
+                    "cantidad": 1,
+                    "subtotal": 8000,
+                    "precio_unitario": 8000,
+                    "producto_id": 2,
+                    "activo": true
+                  }
+                ]
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Factura creada"
+            "description": "Factura creada exitosamente"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -692,7 +1285,7 @@
             "name": "id",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "ID de la factura"
           }
@@ -705,14 +1298,64 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "fecha_compra": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
                   "total": {
                     "type": "number"
                   },
-                  "fecha": {
-                    "type": "string",
-                    "format": "date"
+                  "usuario_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  },
+                  "direccion_comprador": {
+                    "type": "string"
+                  },
+                  "dni_comprador": {
+                    "type": "string"
+                  },
+                  "nombre_comprador": {
+                    "type": "string"
+                  },
+                  "detalle_factura": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "monto": {
+                          "type": "number"
+                        },
+                        "cantidad": {
+                          "type": "integer"
+                        },
+                        "subtotal": {
+                          "type": "number"
+                        },
+                        "precio_unitario": {
+                          "type": "number"
+                        },
+                        "producto_id": {
+                          "type": "integer"
+                        },
+                        "activo": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
                   }
                 }
+              },
+              "example": {
+                "fecha_compra": "2025-06-03T14:45:00Z",
+                "total": 16000,
+                "usuario_id": 3,
+                "activo": true,
+                "direccion_comprador": "Av. San Martín 1234",
+                "dni_comprador": "30123456",
+                "nombre_comprador": "Carlos Pérez"
               }
             }
           }
@@ -720,6 +1363,12 @@
         "responses": {
           "200": {
             "description": "Factura actualizada"
+          },
+          "404": {
+            "description": "Factura no encontrada"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       },
@@ -756,6 +1405,9 @@
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "activo": true
               }
             }
           }
@@ -790,7 +1442,6 @@
           }
         ],
         "requestBody": {
-          "description": "Datos de la nueva imagen",
           "required": true,
           "content": {
             "application/json": {
@@ -800,17 +1451,16 @@
                   "url": {
                     "type": "string"
                   },
-                  "nombre": {
-                    "type": "string"
-                  },
-                  "productoId": {
-                    "type": "string"
+                  "activo": {
+                    "type": "boolean"
                   }
                 },
                 "required": [
-                  "url",
-                  "productoId"
+                  "url"
                 ]
+              },
+              "example": {
+                "url": "https://assets.adidas.com/images/w_600,f_auto,q_auto/5002fee0521a4b87b878f79f066afb34_9366/Zapatillas_Handball_Spezial_Granate_JP8726_00_plp_standard.jpg"
               }
             }
           }
@@ -818,6 +1468,9 @@
         "responses": {
           "201": {
             "description": "Imagen creada"
+          },
+          "500": {
+            "description": "Error al crear la imagen"
           }
         }
       }
@@ -880,13 +1533,13 @@
                   "url": {
                     "type": "string"
                   },
-                  "nombre": {
-                    "type": "string"
-                  },
-                  "productoId": {
-                    "type": "string"
+                  "activo": {
+                    "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "url": "https://assets.adidas.com/images/w_600,f_auto,q_auto/2fb23ba467e54b1fb3469c7824bbc40e_9366/Zapatillas_adidas_Grand_Court_Base_00s_Negro_IH6184_00_plp_standard.jpg"
               }
             }
           }
@@ -894,6 +1547,12 @@
         "responses": {
           "200": {
             "description": "Imagen actualizada"
+          },
+          "404": {
+            "description": "Imagen no encontrada"
+          },
+          "500": {
+            "description": "Error al actualizar la imagen"
           }
         }
       },
@@ -937,6 +1596,12 @@
         "responses": {
           "200": {
             "description": "Estado actualizado"
+          },
+          "404": {
+            "description": "Imagen no encontrada"
+          },
+          "500": {
+            "description": "Error al patchear la imagen"
           }
         }
       }
@@ -980,8 +1645,13 @@
                 },
                 "required": [
                   "nombre",
-                  "provinciaId"
+                  "provincia_id"
                 ]
+              },
+              "example": {
+                "nombre": "Gutierres",
+                "provincia_id": 1,
+                "activo": true
               }
             }
           }
@@ -989,6 +1659,12 @@
         "responses": {
           "201": {
             "description": "Localidad creada"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -1051,10 +1727,15 @@
                   "nombre": {
                     "type": "string"
                   },
-                  "provinciaId": {
+                  "provincia_id": {
                     "type": "string"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Las Heras",
+                "provincia_id": 1,
+                "activo": true
               }
             }
           }
@@ -1062,6 +1743,12 @@
         "responses": {
           "200": {
             "description": "Localidad actualizada"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       },
@@ -1098,6 +1785,9 @@
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "activo": true
               }
             }
           }
@@ -1105,6 +1795,12 @@
         "responses": {
           "200": {
             "description": "Estado actualizado"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -1138,14 +1834,18 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "nombre"
+                ],
                 "properties": {
                   "nombre": {
                     "type": "string"
                   }
-                },
-                "required": [
-                  "nombre"
-                ]
+                }
+              },
+              "example": {
+                "nombre": "Francia",
+                "activo": true
               }
             }
           }
@@ -1153,6 +1853,12 @@
         "responses": {
           "201": {
             "description": "País creado"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -1216,6 +1922,10 @@
                     "type": "string"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Francia",
+                "activo": true
               }
             }
           }
@@ -1223,6 +1933,12 @@
         "responses": {
           "200": {
             "description": "País actualizado"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       },
@@ -1259,6 +1975,9 @@
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "activo": true
               }
             }
           }
@@ -1266,6 +1985,15 @@
         "responses": {
           "200": {
             "description": "Estado actualizado"
+          },
+          "400": {
+            "description": "Datos inválidos enviados"
+          },
+          "404": {
+            "description": "Color no encontrado"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -1457,11 +2185,26 @@
                   "nombre": {
                     "type": "string"
                   },
+                  "tipo_producto": {
+                    "type": "string"
+                  },
+                  "sexo": {
+                    "type": "string"
+                  },
+                  "categoria_id": {
+                    "type": "integer"
+                  },
+                  "precio_id": {
+                    "type": "integer"
+                  },
+                  "imagen_id": {
+                    "type": "integer"
+                  },
                   "descripcion": {
                     "type": "string"
                   },
-                  "precio": {
-                    "type": "number"
+                  "stock": {
+                    "type": "integer"
                   },
                   "activo": {
                     "type": "boolean"
@@ -1469,7 +2212,14 @@
                 },
                 "required": [
                   "nombre",
-                  "precio"
+                  "tipo_producto",
+                  "sexo",
+                  "categoria_id",
+                  "precio_id",
+                  "imagen_id",
+                  "descripcion",
+                  "stock",
+                  "activo"
                 ]
               }
             }
@@ -1537,16 +2287,42 @@
                   "nombre": {
                     "type": "string"
                   },
+                  "tipo_producto": {
+                    "type": "string"
+                  },
+                  "sexo": {
+                    "type": "string"
+                  },
+                  "categoria_id": {
+                    "type": "integer"
+                  },
+                  "precio_id": {
+                    "type": "integer"
+                  },
+                  "imagen_id": {
+                    "type": "integer"
+                  },
                   "descripcion": {
                     "type": "string"
                   },
-                  "precio": {
-                    "type": "number"
+                  "stock": {
+                    "type": "integer"
                   },
                   "activo": {
                     "type": "boolean"
                   }
-                }
+                },
+                "required": [
+                  "nombre",
+                  "tipo_producto",
+                  "sexo",
+                  "categoria_id",
+                  "precio_id",
+                  "imagen_id",
+                  "descripcion",
+                  "stock",
+                  "activo"
+                ]
               }
             }
           }
@@ -1630,11 +2406,20 @@
                 "properties": {
                   "nombre": {
                     "type": "string"
+                  },
+                  "pais_id": {
+                    "type": "integer"
                   }
                 },
                 "required": [
-                  "nombre"
+                  "nombre",
+                  "pais_id"
                 ]
+              },
+              "example": {
+                "nombre": "Neuquen",
+                "pais_id": 1,
+                "activo": true
               }
             }
           }
@@ -1642,6 +2427,12 @@
         "responses": {
           "201": {
             "description": "Provincia creada"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -1700,8 +2491,16 @@
                 "properties": {
                   "nombre": {
                     "type": "string"
+                  },
+                  "pais_id": {
+                    "type": "integer"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Santiago",
+                "pais_id": 2,
+                "activo": true
               }
             }
           }
@@ -1743,6 +2542,9 @@
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "activo": true
               }
             }
           }
@@ -1750,6 +2552,15 @@
         "responses": {
           "200": {
             "description": "Estado actualizado"
+          },
+          "400": {
+            "description": "Datos inválidos enviados"
+          },
+          "404": {
+            "description": "Color no encontrado"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -1790,13 +2601,19 @@
                 "required": [
                   "nombre"
                 ]
+              },
+              "example": {
+                "talla": "XXL"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Talla creada"
+            "description": "Talle creado"
+          },
+          "500": {
+            "description": "Error al crear el talle"
           }
         }
       }
@@ -1855,15 +2672,28 @@
                 "properties": {
                   "nombre": {
                     "type": "string"
+                  },
+                  "activo": {
+                    "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "talla": "XL",
+                "activo": true
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Talla actualizada"
+            "description": "Talle actualizado"
+          },
+          "404": {
+            "description": "Talle no encontrado"
+          },
+          "500": {
+            "description": "Error al actualizar el talle"
           }
         }
       },
@@ -1905,6 +2735,12 @@
         "responses": {
           "200": {
             "description": "Estado actualizado"
+          },
+          "404": {
+            "description": "Talle no encontrado"
+          },
+          "500": {
+            "description": "Error al patchear el talle"
           }
         }
       }
@@ -1968,6 +2804,11 @@
                     "type": "string"
                   }
                 }
+              },
+              "example": {
+                "nombre": "Ana López",
+                "email": "ana.lopez@correo.com",
+                "password": "MiPasswordSeguro123"
               }
             }
           }
@@ -1998,7 +2839,43 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Usuario"
+                "type": "object",
+                "properties": {
+                  "dni": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "contrasenia": {
+                    "type": "string"
+                  },
+                  "usuario": {
+                    "type": "integer"
+                  },
+                  "direccion_id": {
+                    "type": "integer"
+                  },
+                  "talla_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "dni": "12457896",
+                "email": "luispro@gmail.com",
+                "nombre": "Luis",
+                "contrasenia": "LuisContrasenia",
+                "usuario": 0,
+                "direccion_id": 2,
+                "talla_id": 2,
+                "activo": true
               }
             }
           }
@@ -2006,6 +2883,12 @@
         "responses": {
           "201": {
             "description": "Usuario creado"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       },
@@ -2038,7 +2921,7 @@
     },
     "/usuarios/{id}": {
       "put": {
-        "summary": "Actualizar usuario por ID",
+        "summary": "Actualizar un usuario por ID",
         "tags": [
           "Usuarios"
         ],
@@ -2052,7 +2935,7 @@
             "in": "path",
             "name": "id",
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "required": true,
             "description": "ID del usuario a actualizar"
@@ -2063,7 +2946,43 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Usuario"
+                "type": "object",
+                "properties": {
+                  "dni": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "nombre": {
+                    "type": "string"
+                  },
+                  "contrasenia": {
+                    "type": "string"
+                  },
+                  "usuario": {
+                    "type": "integer"
+                  },
+                  "direccion_id": {
+                    "type": "integer"
+                  },
+                  "talla_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "example": {
+                "dni": "12457896",
+                "email": "luispro@gmail.com",
+                "nombre": "Luis Actualizado",
+                "contrasenia": "NuevaContrasenia123",
+                "usuario": 0,
+                "direccion_id": 2,
+                "talla_id": 2,
+                "activo": true
               }
             }
           }
@@ -2071,11 +2990,20 @@
         "responses": {
           "200": {
             "description": "Usuario actualizado"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       },
       "patch": {
-        "summary": "Activar o desactivar usuario por ID",
+        "summary": "Activar o desactivar un usuario por ID",
         "tags": [
           "Usuarios"
         ],
@@ -2089,13 +3017,14 @@
             "in": "path",
             "name": "id",
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "required": true,
-            "description": "ID del usuario a activar o desactivar"
+            "description": "ID del usuario a modificar"
           }
         ],
         "requestBody": {
+          "description": "Cambiar el estado del campo \"activo\"",
           "required": true,
           "content": {
             "application/json": {
@@ -2106,6 +3035,9 @@
                     "type": "boolean"
                   }
                 }
+              },
+              "example": {
+                "activo": false
               }
             }
           }
@@ -2113,6 +3045,15 @@
         "responses": {
           "200": {
             "description": "Estado del usuario modificado"
+          },
+          "400": {
+            "description": "Error en los datos enviados"
+          },
+          "404": {
+            "description": "Usuario no encontrado"
+          },
+          "500": {
+            "description": "Error del servidor"
           }
         }
       }
@@ -2131,6 +3072,10 @@
     {
       "name": "Descuento",
       "description": "Gestión de descuentos"
+    },
+    {
+      "name": "DetalleFactura",
+      "description": "Gestión de detalle de las facturas de la tienda de ropa"
     },
     {
       "name": "Direccion",

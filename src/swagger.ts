@@ -29,5 +29,5 @@ export function setupSwagger(app: Express): void {
 
 // ⚠️ Exportar a archivo, descomentar solo si queremos actualizar la docs
 
-// import fs from 'fs'
-// fs.writeFileSync('./swagger.json', JSON.stringify(swaggerSpec, null, 2))
+ import fs from 'fs'
+ fs.writeFileSync('./swagger.json', JSON.stringify(swaggerSpec, null, 2))

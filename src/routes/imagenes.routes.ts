@@ -62,7 +62,6 @@ router.use((req, res, next) => {
  *     security:
  *       - bearerAuth: []
  *     requestBody:
- *       description: Datos de la nueva imagen
  *       required: true
  *       content:
  *         application/json:
@@ -71,16 +70,18 @@ router.use((req, res, next) => {
  *             properties:
  *               url:
  *                 type: string
- *               nombre:
- *                 type: string
- *               productoId:
- *                 type: string
+ *               activo:
+ *                 type: boolean
  *             required:
  *               - url
- *               - productoId
+ *           example:
+ *             url: https://assets.adidas.com/images/w_600,f_auto,q_auto/5002fee0521a4b87b878f79f066afb34_9366/Zapatillas_Handball_Spezial_Granate_JP8726_00_plp_standard.jpg
+ 
  *     responses:
  *       201:
  *         description: Imagen creada
+ *       500: 
+ *         description: Error al crear la imagen
  */
 router.post('/', imagenesController.postImage)
 
@@ -109,13 +110,18 @@ router.post('/', imagenesController.postImage)
  *             properties:
  *               url:
  *                 type: string
- *               nombre:
- *                 type: string
- *               productoId:
- *                 type: string
+ *               activo:
+ *                 type: boolean
+ * 
+ *           example: 
+ *             url: https://assets.adidas.com/images/w_600,f_auto,q_auto/2fb23ba467e54b1fb3469c7824bbc40e_9366/Zapatillas_adidas_Grand_Court_Base_00s_Negro_IH6184_00_plp_standard.jpg
  *     responses:
  *       200:
  *         description: Imagen actualizada
+ *       404: 
+ *         description: Imagen no encontrada
+ *       500:
+ *         description: Error al actualizar la imagen 
  */
 router.put('/:id', imagenesController.updateImage)
 
@@ -147,6 +153,10 @@ router.put('/:id', imagenesController.updateImage)
  *     responses:
  *       200:
  *         description: Estado actualizado
+ *       404: 
+ *         description: Imagen no encontrada
+ *       500:
+ *         description: Error al patchear la imagen
  */
 router.patch('/:id', imagenesController.patchImage)
 

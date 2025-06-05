@@ -46,7 +46,8 @@ export const postProduct = async (req: Request, res: Response) => {
         }else{
 
             res.status(201).json(
-              utils.convertBigIntFields(createdProducto)
+                utils.convertDatesToISOString(utils.convertBigIntFields(createdProducto))
+
             )
             return
     
@@ -78,7 +79,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
         const productos = await productosServices.getAllProducts()
         
-        res.status(200).json(utils.convertBigIntFields(productos))
+        res.status(200).json(utils.convertDatesToISOString(utils.convertBigIntFields(productos)))
         return
 
     } catch (err: unknown) {
@@ -111,7 +112,8 @@ export const getProductById = async (req: Request, res: Response) => {
         }else{
 
            res.status(200).json(
-              utils.convertBigIntFields(producto)
+                utils.convertDatesToISOString(utils.convertBigIntFields(producto))
+
             )
            return
 
@@ -177,7 +179,8 @@ export const updateProduct = async (req: Request, res: Response) => {
         }else{
             
             res.status(200).json(
-              utils.convertBigIntFields(updatedProducto)
+                 utils.convertDatesToISOString(utils.convertBigIntFields(updatedProducto))
+
             )
             return
         }
@@ -229,7 +232,8 @@ export const patchProduct = async (req: Request, res: Response) => {
         }else{
             
             res.status(200).json(
-              utils.convertBigIntFields(updatedProducto)
+                utils.convertDatesToISOString(utils.convertBigIntFields(updatedProducto))
+
             )
             return
         }
