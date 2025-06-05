@@ -27,14 +27,12 @@ export const createProduct = (data: {
 export const getAllProducts = () => prisma.productos.findMany({
      include: {
         categoria: true,
-        precios: true,
         imagenes: true,
     }
 })
 
 export const getProductById = (id: number) => prisma.productos.findUnique({where: {id},      include: {
         categoria: true,
-        precios: true,
         imagenes: true,
     }})
 
@@ -45,7 +43,6 @@ export const updateProduct = (id: number, data: Partial<Producto>
         data,
         include: {
         categoria: true,
-        precios: true,
         imagenes: true,
     }})
 }

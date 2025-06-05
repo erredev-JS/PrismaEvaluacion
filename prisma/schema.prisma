@@ -21,6 +21,7 @@ model colores {
   valor          String?          @db.VarChar(255)
   activo         Boolean         @db.Bit(1)  @default(true)
   producto_color producto_color[] @ignore
+  detalles  detalles[]
 }
 
 model descuentos {
@@ -54,14 +55,16 @@ model detalle_factura {
 
 model detalles {
   id        BigInt     @id @default(autoincrement())
-  color     String?    @db.VarChar(255)
-  tama_o    String?    @map("tamaño") @db.VarChar(255)
+  color_id     BigInt?    
+  talla_id   BigInt?    
   estado    Boolean?   @db.Bit(1)
-  stock     Int?
+  stock     Int         @default(0)
   precio_id BigInt?    @unique(map: "UKsvdfehjnhso84dt19drc78y4i")
   activo    Boolean   @db.Bit(1)  @default(true)
   precios   precios?   @relation(fields: [precio_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKc8oetbck5raimawexmts4m0p1")
-  imagenes  imagenes[]
+  color colores?  @relation(fields: [color_id], references: [id])
+  talla talla?  @relation(fields: [talla_id], references: [id]) 
+  
 }
 
 model direccion {
@@ -98,12 +101,10 @@ model factura {
 model imagenes {
   id        BigInt     @id @default(autoincrement())
   url       String?    @db.VarChar(255)
-  imagen_id BigInt?
   activo    Boolean   @db.Bit(1)  @default(true)
-  detalles  detalles?  @relation(fields: [imagen_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKhyoquja2ddcnew4324heh2qtl")
   productos productos?
 
-  @@index([imagen_id], map: "FKhyoquja2ddcnew4324heh2qtl")
+  
 }
 
 model localidad {
@@ -132,7 +133,7 @@ model precios {
   activo        Boolean    @db.Bit(1) @default(true)
   detalles      detalles?
   descuentos    descuentos? @relation(fields: [descuento_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKc4kat1n0tjfind4uxefxleueo")
-  productos     productos?
+  
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -165,16 +166,13 @@ model productos {
   tipo_producto   Int?              @db.TinyInt
   sexo            String?           @db.VarChar(255)
   categoria_id    BigInt?
-  precio_id       BigInt?           @unique(map: "UKiui74lcrybsvvnqgbv2ubx8ge")
   imagen_id       BigInt?           @unique(map: "UK1tktbgm379pqd9mnb6jyalbvm")
   descripcion     String?           @db.VarChar(255)
-  stock           Int               @default(0)
   activo          Boolean          @db.Bit(1) @default(true)
   detalle_factura detalle_factura[]
   producto_color  producto_color[]  @ignore
   producto_talle  producto_talle[]  @ignore
   imagenes        imagenes?         @relation(fields: [imagen_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK8y54fd89l9sc6wnnano8synuk")
-  precios         precios?          @relation(fields: [precio_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKah37frhi5ab0uf605umis1m37")
   categoria       categoria?        @relation(fields: [categoria_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKpg3xiei77fmdbpx20n8i9txs6")
 
   @@index([categoria_id], map: "FKpg3xiei77fmdbpx20n8i9txs6")
@@ -197,6 +195,7 @@ model talla {
   activo         Boolean         @db.Bit(1) @default(true)
   producto_talle producto_talle[] @ignore
   usuarios       usuarios[]
+  detalles detalles[]
 }
 
 model usuarios {

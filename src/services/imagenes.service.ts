@@ -3,7 +3,6 @@ import { prisma } from '../db/client'
 
 export const createImage = (data: {
     url: string,
-    imagen_id: number,
     activo: boolean,
 }) => prisma.imagenes.create({data})
 
@@ -13,7 +12,6 @@ export const getImageById = (id: number) => prisma.imagenes.findUnique({where: {
 
 export const updateImage = (id: number, data: {
     url: string,
-    imagen_id: number,
     activo: boolean,
 }) => prisma.imagenes.update({where: {id}, data})
 
