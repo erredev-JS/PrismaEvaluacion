@@ -74,14 +74,10 @@ router.use((req, res, next) => {
  *                 type: string
  *               categoria_id:
  *                 type: integer
- *               precio_id:
- *                 type: integer
  *               imagen_id:
  *                 type: integer
  *               descripcion:
  *                 type: string
- *               stock:
- *                 type: integer
  *               activo:
  *                 type: boolean
  *             required:
@@ -89,10 +85,8 @@ router.use((req, res, next) => {
  *               - tipo_producto
  *               - sexo
  *               - categoria_id
- *               - precio_id
  *               - imagen_id
  *               - descripcion
- *               - stock
  *               - activo
  *     responses:
  *       201:
@@ -130,14 +124,10 @@ router.post('/', productosController.postProduct)
  *                 type: string
  *               categoria_id:
  *                 type: integer
- *               precio_id:
- *                 type: integer
  *               imagen_id:
  *                 type: integer
  *               descripcion:
  *                 type: string
- *               stock:
- *                 type: integer
  *               activo:
  *                 type: boolean
  *             required:
@@ -145,10 +135,8 @@ router.post('/', productosController.postProduct)
  *               - tipo_producto
  *               - sexo
  *               - categoria_id
- *               - precio_id
  *               - imagen_id
  *               - descripcion
- *               - stock
  *               - activo
  *     responses:
  *       200:
@@ -180,6 +168,8 @@ router.put('/:id', productosController.updateProduct)
  *             properties:
  *               activo:
  *                 type: boolean
+ *           example:
+ *             activo: true
  *     responses:
  *       200:
  *         description: Estado actualizado

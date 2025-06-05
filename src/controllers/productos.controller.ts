@@ -11,10 +11,8 @@ export const postProduct = async (req: Request, res: Response) => {
     tipo_producto,
     sexo,
     categoria_id,
-    precio_id,
     imagen_id,
     descripcion,
-    stock,
     activo
   } = req.body
 
@@ -23,10 +21,8 @@ export const postProduct = async (req: Request, res: Response) => {
     !tipo_producto || 
     !sexo || 
     categoria_id === undefined ||
-    precio_id === undefined ||
     imagen_id === undefined ||
     !descripcion || 
-    stock === undefined || 
     activo === undefined
   ) {
     res.status(400).json({ error: 'Faltan atributos obligatorios' })
@@ -37,10 +33,8 @@ export const postProduct = async (req: Request, res: Response) => {
     tipo_producto,
     sexo,
     categoria_id,
-    precio_id,
     imagen_id,
     descripcion,
-    stock,
     activo
   }
 
@@ -148,10 +142,8 @@ export const updateProduct = async (req: Request, res: Response) => {
     tipo_producto,
     sexo,
     categoria_id,
-    precio_id,
     imagen_id,
     descripcion,
-    stock,
     activo
   } = req.body
 
@@ -161,10 +153,8 @@ export const updateProduct = async (req: Request, res: Response) => {
   if (tipo_producto !== undefined) body.tipo_producto = tipo_producto;
   if (sexo !== undefined) body.sexo = sexo;
   if (categoria_id !== undefined) body.categoria_id = categoria_id;
-  if (precio_id !== undefined) body.precio_id = precio_id;
   if (imagen_id !== undefined) body.imagen_id = imagen_id;
   if (descripcion !== undefined) body.descripcion = descripcion;
-  if (stock !== undefined) body.stock = stock;
   if (activo !== undefined) body.activo = activo;
 
 
