@@ -92,7 +92,7 @@ export const updateAdress = async(req : Request, res : Response) => {
                 return
             }
 
-            res.status(200).json(utils.convertBigIntFields(updateAdress))
+            res.status(200).json(utils.convertBigIntFields(updatedAdress))
             return
         }
 
@@ -122,7 +122,7 @@ export const patchAdress = async (req : Request, res : Response) => {
                 res.status(400).json({error : 'No se pudo patchear la direccion'})
                 return
             } else {
-                res.status(200).json(utils.convertBigIntFields(updateAdress))
+                res.status(200).json(utils.convertBigIntFields(updatedAdress))
                 return
             }
         }
