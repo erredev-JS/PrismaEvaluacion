@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  
 }
 
 datasource db {
@@ -11,7 +10,7 @@ datasource db {
 model categoria {
   id        BigInt      @id @default(autoincrement())
   nombre    String?     @db.VarChar(255)
-  activo    Boolean    @db.Bit(1)  @default(true)
+  activo    Boolean     @default(true) @db.Bit(1)
   productos productos[]
 }
 
@@ -19,9 +18,9 @@ model colores {
   id             BigInt           @id @default(autoincrement())
   nombre         String?          @db.VarChar(255)
   valor          String?          @db.VarChar(255)
-  activo         Boolean         @db.Bit(1)  @default(true)
+  activo         Boolean          @default(true) @db.Bit(1)
   producto_color producto_color[] @ignore
-  detalles  detalles[]
+  detalles       detalles[]
 }
 
 model descuentos {
@@ -33,7 +32,7 @@ model descuentos {
   tiempo_desde     DateTime? @db.Time(6)
   tiempo_hasta     DateTime? @db.Time(6)
   nombre           String?   @db.VarChar(255)
-  activo           Boolean  @db.Bit(1) @default(true)
+  activo           Boolean   @default(true) @db.Bit(1)
   precios          precios?
 }
 
@@ -45,7 +44,7 @@ model detalle_factura {
   precio_unitario Float?
   factura_id      BigInt?
   producto_id     BigInt?
-  activo          Boolean   @db.Bit(1)  @default(true)
+  activo          Boolean    @default(true) @db.Bit(1)
   productos       productos? @relation(fields: [producto_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKt42rg2ha5kdrb6t1v35dwn27x")
   factura         factura?   @relation(fields: [factura_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKucgyfvfujw8g2tt3c6fdkxai")
 
@@ -54,16 +53,18 @@ model detalle_factura {
 }
 
 model detalles {
-  id        BigInt     @id @default(autoincrement())
-  color_id     BigInt?    
-  talla_id   BigInt?    
-  stock     Int         @default(0)
-  precio_id BigInt?    @unique(map: "UKsvdfehjnhso84dt19drc78y4i")
-  activo    Boolean   @db.Bit(1)  @default(true)
-  precios   precios?   @relation(fields: [precio_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKc8oetbck5raimawexmts4m0p1")
-  color colores?  @relation(fields: [color_id], references: [id])
-  talla talla?  @relation(fields: [talla_id], references: [id]) 
-  
+  id          BigInt   @id @default(autoincrement())
+  color_id    BigInt?
+  talla_id    BigInt?
+  stock       Int      @default(0)
+  precio_id   BigInt?  @unique(map: "UKsvdfehjnhso84dt19drc78y4i")
+  activo      Boolean  @default(true) @db.Bit(1)
+  precios     precios? @relation(fields: [precio_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKc8oetbck5raimawexmts4m0p1")
+  color       colores? @relation(fields: [color_id], references: [id])
+  talla       talla?   @relation(fields: [talla_id], references: [id])
+  producto_id BigInt
+
+  producto productos? @relation("ProductoDetalles", fields: [producto_id], references: [id])
 }
 
 model direccion {
@@ -73,7 +74,7 @@ model direccion {
   calle                                     String?    @db.VarChar(255)
   user_id                                   BigInt?
   localidad_id                              BigInt?
-  activo                                    Boolean   @db.Bit(1)  @default(true)
+  activo                                    Boolean    @default(true) @db.Bit(1)
   localidad                                 localidad? @relation(fields: [localidad_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKbrm0ogdtkt096len14mgaaau7")
   usuarios_direccion_user_idTousuarios      usuarios?  @relation("direccion_user_idTousuarios", fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKsevgdua41k9nn1k7hhglxgixa")
   usuarios_usuarios_direccion_idTodireccion usuarios[] @relation("usuarios_direccion_idTodireccion")
@@ -87,7 +88,7 @@ model factura {
   fecha_compra        DateTime?         @db.Date
   total               Float?
   usuario_id          BigInt?
-  activo              Boolean          @db.Bit(1) @default(true)
+  activo              Boolean           @default(true) @db.Bit(1)
   direccion_comprador String?           @db.VarChar(255)
   dni_comprador       String?           @db.VarChar(255)
   nombre_comprador    String?           @db.VarChar(255)
@@ -100,17 +101,15 @@ model factura {
 model imagenes {
   id        BigInt     @id @default(autoincrement())
   url       String?    @db.VarChar(255)
-  activo    Boolean   @db.Bit(1)  @default(true)
+  activo    Boolean    @default(true) @db.Bit(1)
   productos productos?
-
-  
 }
 
 model localidad {
   id           BigInt      @id @default(autoincrement())
   nombre       String?     @db.VarChar(255)
   provincia_id BigInt?
-  activo       Boolean    @db.Bit(1)  @default(true)
+  activo       Boolean     @default(true) @db.Bit(1)
   direccion    direccion[]
   provincia    provincia?  @relation(fields: [provincia_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK37mbpxuicwnbo878s9djjgr39")
 
@@ -120,7 +119,7 @@ model localidad {
 model pais {
   id        BigInt      @id @default(autoincrement())
   nombre    String?     @db.VarChar(255)
-  activo    Boolean    @db.Bit(1)  @default(true)
+  activo    Boolean     @default(true) @db.Bit(1)
   provincia provincia[]
 }
 
@@ -129,10 +128,9 @@ model precios {
   precio_compra Float?
   precio_venta  Float?
   descuento_id  BigInt?     @unique(map: "UK6kn3rbbqx5evkg21lq05s9mk9")
-  activo        Boolean    @db.Bit(1) @default(true)
+  activo        Boolean     @default(true) @db.Bit(1)
   detalles      detalles?
   descuentos    descuentos? @relation(fields: [descuento_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKc4kat1n0tjfind4uxefxleueo")
-  
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
@@ -167,8 +165,9 @@ model productos {
   categoria_id    BigInt?
   imagen_id       BigInt?           @unique(map: "UK1tktbgm379pqd9mnb6jyalbvm")
   descripcion     String?           @db.VarChar(255)
-  activo          Boolean          @db.Bit(1) @default(true)
+  activo          Boolean           @default(true) @db.Bit(1)
   detalle_factura detalle_factura[]
+  detalles        detalles[]        @relation("ProductoDetalles")
   producto_color  producto_color[]  @ignore
   producto_talle  producto_talle[]  @ignore
   imagenes        imagenes?         @relation(fields: [imagen_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK8y54fd89l9sc6wnnano8synuk")
@@ -181,7 +180,7 @@ model provincia {
   id        BigInt      @id @default(autoincrement())
   nombre    String?     @db.VarChar(255)
   pais_id   BigInt?
-  activo    Boolean    @db.Bit(1) @default(true)
+  activo    Boolean     @default(true) @db.Bit(1)
   localidad localidad[]
   pais      pais?       @relation(fields: [pais_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKm4s599988w0v1q1nw6dyo5t2m")
 
@@ -191,10 +190,10 @@ model provincia {
 model talla {
   id             BigInt           @id @default(autoincrement())
   talla          String?          @db.VarChar(255)
-  activo         Boolean         @db.Bit(1) @default(true)
+  activo         Boolean          @default(true) @db.Bit(1)
   producto_talle producto_talle[] @ignore
   usuarios       usuarios[]
-  detalles detalles[]
+  detalles       detalles[]
 }
 
 model usuarios {
@@ -202,11 +201,11 @@ model usuarios {
   dni                                        String?     @unique @db.VarChar(255)
   email                                      String?     @unique @db.VarChar(255)
   nombre                                     String?     @db.VarChar(255)
-  contrasenia                                String     @db.VarChar(255)
+  contrasenia                                String      @db.VarChar(255)
   usuario                                    Int?        @db.TinyInt
   direccion_id                               BigInt?
   talla_id                                   BigInt?
-  activo                                     Boolean    @db.Bit(1)  @default(true)
+  activo                                     Boolean     @default(true) @db.Bit(1)
   direccion_direccion_user_idTousuarios      direccion[] @relation("direccion_user_idTousuarios")
   factura                                    factura[]
   direccion_usuarios_direccion_idTodireccion direccion?  @relation("usuarios_direccion_idTodireccion", fields: [direccion_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FKca4tgd5e0gnem264iqbtm41up")

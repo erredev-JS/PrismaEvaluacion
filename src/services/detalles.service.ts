@@ -11,13 +11,15 @@ export const postDetails = async (data : {
     talla_id : number,
     stock : number,
     precio_id: number,
+    producto_id: number,
     activo: boolean
 }) => {
-    const {color_id, talla_id, precio_id} = data
+    const {color_id, talla_id, precio_id, producto_id} = data
 
     const existingColor = await prisma.colores.findUnique({where : {id: color_id}})
     const existingSize = await prisma.talla.findUnique({where : {id : talla_id}})
     const existingPrice = await prisma.precios.findUnique({where : {id: precio_id}})
+    const existingProduct = await prisma.productos.findUnique({where:{id: producto_id}})
 
     if (!existingColor) {
         throw new Error (`El color con id : ${color_id} no existe`)
@@ -29,6 +31,9 @@ export const postDetails = async (data : {
 
     if (!existingPrice){
         throw new Error (`El precio con id : ${precio_id} no existe`)
+    }
+    if (!existingProduct){
+        throw new Error (`El producto con id : ${producto_id} no existe`)
     }
 
     return await prisma.detalles.create({

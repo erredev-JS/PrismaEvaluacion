@@ -919,7 +919,8 @@
                   "color_id",
                   "talla_id",
                   "stock",
-                  "precio_id"
+                  "precio_id",
+                  "producto_id"
                 ],
                 "properties": {
                   "color_id": {
@@ -934,6 +935,9 @@
                   "precio_id": {
                     "type": "integer"
                   },
+                  "producto_id": {
+                    "type": "integer"
+                  },
                   "activo": {
                     "type": "boolean"
                   }
@@ -944,6 +948,7 @@
                 "talla_id": 2,
                 "stock": 100,
                 "precio_id": 5,
+                "producto_id": 1,
                 "activo": true
               }
             }
@@ -1039,6 +1044,7 @@
                 "talla_id": 3,
                 "stock": 50,
                 "precio_id": 4,
+                "producto_id": 1,
                 "activo": true
               }
             }

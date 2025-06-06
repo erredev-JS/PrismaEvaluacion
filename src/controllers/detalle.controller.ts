@@ -10,13 +10,14 @@ export const postDetalle = async (req:Request, res:Response) => {
             talla_id,
             stock,
             precio_id,
+            producto_id,
             activo
         } = req.body
 
         if(!color_id ||
             !talla_id ||
             !stock ||
-            !precio_id
+            !precio_id || !producto_id
         ){
             res.status(400).json({error: "Faltan atributos obligatorios"})
             return
@@ -27,6 +28,7 @@ export const postDetalle = async (req:Request, res:Response) => {
             talla_id,
             stock,
             precio_id,
+            producto_id,
             activo
         }
 

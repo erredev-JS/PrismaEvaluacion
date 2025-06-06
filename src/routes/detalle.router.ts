@@ -81,6 +81,7 @@ router.use((req, res, next) => {
  *               - talla_id
  *               - stock
  *               - precio_id
+ *               - producto_id
  *             properties:
  *               color_id:
  *                 type: integer
@@ -90,6 +91,8 @@ router.use((req, res, next) => {
  *                 type: integer
  *               precio_id:
  *                 type: integer
+ *               producto_id:
+ *                 type: integer
  *               activo:
  *                 type: boolean
  *           example:
@@ -97,6 +100,7 @@ router.use((req, res, next) => {
  *             talla_id: 2
  *             stock: 100
  *             precio_id: 5
+ *             producto_id: 1
  *             activo: true
  *     responses:
  *       201:
@@ -148,6 +152,7 @@ router.post('/', detalleController.postDetalle)
  *             talla_id: 3
  *             stock: 50
  *             precio_id: 4
+ *             producto_id: 1
  *             activo: true
  *     responses:
  *       200:
