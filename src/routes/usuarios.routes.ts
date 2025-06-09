@@ -24,12 +24,12 @@ const router = Router()
  *           schema:
  *             type: object
  *             properties:
- *               email:
+ *               nombre:
  *                 type: string
- *                 example: user@example.com
- *               password:
+ *                 example: rodrigo
+ *               constrasenia:
  *                 type: string
- *                 example: password123
+ *                 example: 1234
  *     responses:
  *       200:
  *         description: Login exitoso, devuelve token de autenticación
@@ -57,16 +57,32 @@ router.post('/login', usuariosController.login)
  *                 type: string
  *               password:
  *                 type: string
+ *               dni:
+ *                 type: string
+ *               usuario:
+ *                 type: integer
+ *               direccion_id:
+ *                 type: integer
+ *               talla_id:
+ *                 type: integer
+ *               activo:
+ *                 type: boolean
  *           example:
  *             nombre: "Ana López"
  *             email: "ana.lopez@correo.com"
  *             password: "MiPasswordSeguro123"
+ *             dni: "32589674"
+ *             usuario: 0
+ *             direccion_id: 1
+ *             talla_id: 2
+ *             activo: true
  *     responses:
  *       201:
  *         description: Usuario creado exitosamente
  *       400:
  *         description: Datos inválidos
  */
+
 router.post('/register', usuariosController.register)
 
 // Middleware para proteger rutas siguientes con autenticación

@@ -2968,13 +2968,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "email": {
+                  "nombre": {
                     "type": "string",
-                    "example": "user@example.com"
+                    "example": "rodrigo"
                   },
-                  "password": {
+                  "constrasenia": {
                     "type": "string",
-                    "example": "password123"
+                    "example": 1234
                   }
                 }
               }
@@ -3012,13 +3012,33 @@
                   },
                   "password": {
                     "type": "string"
+                  },
+                  "dni": {
+                    "type": "string"
+                  },
+                  "usuario": {
+                    "type": "integer"
+                  },
+                  "direccion_id": {
+                    "type": "integer"
+                  },
+                  "talla_id": {
+                    "type": "integer"
+                  },
+                  "activo": {
+                    "type": "boolean"
                   }
                 }
               },
               "example": {
                 "nombre": "Ana López",
                 "email": "ana.lopez@correo.com",
-                "password": "MiPasswordSeguro123"
+                "password": "MiPasswordSeguro123",
+                "dni": "32589674",
+                "usuario": 0,
+                "direccion_id": 1,
+                "talla_id": 2,
+                "activo": true
               }
             }
           }
